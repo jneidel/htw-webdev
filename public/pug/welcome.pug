@@ -1,0 +1,12 @@
+extends layout
+
+block styles
+  link( rel="stylesheet" type="text/css" href="../css/welcome.css" )
+
+block content
+  h1 {{ h1 }}
+  p Date.now(): {{ time }}
+
+block scripts
+  script( src="../vue.js" )
+  script( src="../js/welcome.js" type="module" )

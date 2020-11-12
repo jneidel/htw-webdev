@@ -1,0 +1,24 @@
+doctype html
+html
+  head
+    title= `${title} | wd-todo`
+    meta( charset="UTF-8" )
+    meta( name="viewport" content="width=device-width,initial-scale=1.0" )
+    link( rel="shortcut icon" type="image/ico" href="favicon.ico" )
+    // http://convertico.com
+    link( href="https://fonts.googleapis.com/css?family=Lato|Open+Sans" rel="stylesheet")
+    block styles
+
+  body
+    #content
+      block content
+
+    block scripts
+
+    style.
+      html {
+        box-sizing: border-box;
+      }
+      *:not( img ), *:before, *:after {
+        box-sizing: inherit;
+      }

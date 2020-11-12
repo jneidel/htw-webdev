@@ -1,0 +1,49 @@
+{
+  "name": "htw-webdev-todo",
+  "version": "0.0.0",
+  "description": "",
+  "repository": "jneidel/htw-webdev-todo",
+  "license": "MIT",
+  "author": {
+    "name": "Jonathan Neidel",
+    "email": "git@jneidel.com",
+    "url": "http://jneidel.com"
+  },
+  "main": "app.js",
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "start": "nodemon app.js --ignore dist/ --ignore test/ --trace-sync-io",
+    "test": "jest",
+    "watch": "concurrently \"npm run start\" \"npm run watch-test\" --names \"💻,🚀\" --prefix name",
+    "watch-test": "jest --watch",
+    "watch-unit": "jest --watch test/unit/*.test.ts",
+    "start-prod": "node -r dotenv/config app.js dotenv_config_path=.env",
+    "lint": "eslint --fix --ext .js ."
+  },
+  "dependencies": {
+    "axios": "^0.21.0",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "helmet": "^4.2.0",
+    "pug": "^3.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "eslint": "^7.13.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-unicorn": "^23.0.0",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.6"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/?*.test.js",
+      "test/**/?.test.js"
+    ]
+  }
+}
