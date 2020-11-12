@@ -13,3 +13,18 @@
 - SQL (database)
 - jest (test runner)
 - pug (html template)
+- eslint (linter)
+
+## Installation
+
+```sh
+npm install
+```
+
+## Usage
+
+Start the server:
+
+```sh
+npm start
+```
