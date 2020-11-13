@@ -11,7 +11,7 @@
   },
   "main": "app.js",
   "engines": {
-    "node": ">=8"
+    "node": ">=14"
   },
   "scripts": {
     "start": "nodemon app.js --ignore dist/ --ignore test/ --trace-sync-io",
