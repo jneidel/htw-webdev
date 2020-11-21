@@ -36,22 +36,32 @@ body {
   grid-template-rows: 60px 1fr 60px;
   grid-template-areas:
     "header header header"
-    ". main ."
+    ". content ."
     ". footer .";
   min-height: 100vh;
   margin: 0;
 }
 
 #main {
-  grid-area: main;
+  grid-area: content;
 }
 
 /* header */
 #header {
   grid-area: header;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 5px 25px;
 }
 
 /* footer */
 #footer {
   grid-area: footer;
+}
+
+/* util */
+.horizontal-center {
+  display: flex;
+  justify-content: center;
 }
