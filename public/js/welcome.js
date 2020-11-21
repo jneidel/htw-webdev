@@ -1,4 +1,4 @@
-const Content = {
+const Main = {
   data() {
     return {
       h1  : "htw-webdev-todo",
@@ -12,4 +12,4 @@ const Content = {
   },
 };
 
-Vue.createApp( Content ).mount( "#content" );
+Vue.createApp( Main ).mount( "#main" );
