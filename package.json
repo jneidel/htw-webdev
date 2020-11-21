@@ -14,7 +14,7 @@
     "node": ">=14"
   },
   "scripts": {
-    "start": "nodemon app.js --ignore dist/ --ignore test/ --trace-sync-io",
+    "start": "nodemon app.js --ignore test/ --trace-sync-io",
     "test": "jest",
     "watch": "concurrently \"npm run start\" \"npm run watch-test\" --names \"💻,🚀\" --prefix name",
     "watch-test": "jest --watch",
