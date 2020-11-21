@@ -1,17 +1,31 @@
 doctype html
 html
   head
-    title= `${title} | wd-todo`
+    title= `${title} | What to do?`
     meta( charset="UTF-8" )
     meta( name="viewport" content="width=device-width,initial-scale=1.0" )
     link( rel="shortcut icon" type="image/ico" href="favicon.ico" )
     // http://convertico.com
     link( href="https://fonts.googleapis.com/css?family=Lato|Open+Sans" rel="stylesheet")
+    link( href="../css/layout.css" rel="stylesheet" type="text/css" )
     block styles
 
   body
+    #header
+      #header-left
+        a.header-link-home( href="/" )
+          p#logo What to do?
+      #header-right
+        a.header-link-app( href="/app" )
+          p Open App
+
     #main
       block main
+
+    #footer
+      hr.footer-hr
+      div.footer-links
+        a.footer-link( href="https://github.com/jneidel/htw-webdev-todo" ) Source
 
     block scripts
 
