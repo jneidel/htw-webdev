@@ -16,8 +16,13 @@ html
         a#logo-link( href="/" )
           p#logo What to do?
       #header-right.vertical-center
-        a.underscored-link( href="/app" )
-          p Open App
+        - const isAuthorized = true // later set by on auth middleware
+        if isAuthorized
+          a.underscored-link( href="/app" )
+            p Open App
+        else
+          a.underscored-link( href="/login" )
+            p Login
 
     #main
       block main
