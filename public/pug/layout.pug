@@ -13,10 +13,10 @@ html
   body
     #header
       #header-left
-        a.header-link-home( href="/" )
+        a#logo-link( href="/" )
           p#logo What to do?
-      #header-right
-        a.header-link-app( href="/app" )
+      #header-right.vertical-center
+        a.underscored-link( href="/app" )
           p Open App
 
     #main
@@ -26,7 +26,7 @@ html
       hr#footer-hr
       div.horizontal-center
         div#footer-links
-          a.footer-link( href="https://github.com/jneidel/htw-webdev-todo" ) Source
+          a.underscored-link( href="https://github.com/jneidel/htw-webdev-todo" ) Source
 
     block scripts
 
