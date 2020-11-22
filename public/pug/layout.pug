@@ -1,17 +1,37 @@
 doctype html
 html
   head
-    title= `${title} | wd-todo`
+    title= `${title} | What to do?`
     meta( charset="UTF-8" )
     meta( name="viewport" content="width=device-width,initial-scale=1.0" )
     link( rel="shortcut icon" type="image/ico" href="favicon.ico" )
     // http://convertico.com
     link( href="https://fonts.googleapis.com/css?family=Lato|Open+Sans" rel="stylesheet")
+    link( href="../css/layout.css" rel="stylesheet" type="text/css" )
     block styles
 
   body
-    #content
-      block content
+    #header
+      #header-left
+        a#logo-link( href="/" )
+          p#logo What to do?
+      #header-right.vertical-center
+        - const isAuthorized = true // later set by on auth middleware
+        if isAuthorized
+          a.underscored-link( href="/app" )
+            p Open App
+        else
+          a.underscored-link( href="/login" )
+            p Login
+
+    #main
+      block main
+
+    #footer
+      hr#footer-hr
+      div.horizontal-center
+        div#footer-links
+          a.underscored-link( href="https://github.com/jneidel/htw-webdev-todo" ) Source
 
     block scripts
 
