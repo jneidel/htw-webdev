@@ -3,7 +3,10 @@
 >
 
 [![Travis Build Status](https://img.shields.io/travis/jneidel/htw-webdev-todo.svg?style=flat-square)](https://travis-ci.org/jneidel/htw-webdev-todo)
+[![Heroku Deployment master](https://img.shields.io/badge/deployment-master-brightgreen?style=flat-square)](https://htw-wd-todo.herokuapp.com)
 [![License MIT](https://img.shields.io/badge/license-GPLv3-green.svg?style=flat-square)](LICENSE)
+
+[View App (master)](https://htw-wd-todo.herokuapp.com)
 
 ## Stack
 
