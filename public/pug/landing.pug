@@ -1,0 +1,19 @@
+extends layout
+
+block styles
+    link(rel="stylesheet" type="text/css" href="../css/landing.css")
+
+block main
+    h1 You seem to have landed
+    p.
+        "What to do" is an easy to use to-do application, designed for
+        individual or colaborativ use.
+    ul
+        li Todos can be grouped into lists in order to sort them.
+        li List and single todos can be shared with other contributors
+        li Todos can have images, text and recordings added to them
+        li ...
+    a( href="/welcome" ) Link to welcome 
+
+block scripts
+    script( scr='../vue.js')
