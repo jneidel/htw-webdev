@@ -12,4 +12,4 @@ const Main = {
   },
 };
 
-Vue.createApp( Main ).mount( "#main" );
+Vue.createApp( Main ).mount( "#main" ); // eslint-disable-line no-undef

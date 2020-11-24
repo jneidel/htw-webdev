@@ -6,7 +6,7 @@ logger.token( "customDate", () => {
   function prependZero( str, max ) {
     str = String( str );
     if ( str.length !== max ) {
-      for ( let i = 0; str.length - max; )
+      for ( ; str.length - max; )
         str = `0${str}`;
 
     }
