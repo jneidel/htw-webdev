@@ -4,27 +4,32 @@ block styles
     link(rel="stylesheet" type="text/css" href="../css/landing.css")
 
 block main
-    div(class='center')
+    div(class="center")
         h1 You seem to have landed
         p.
             "What to do" is an easy to use to-do application, designed for
             individual or colaborativ use.
-        ul
-            li.
-                Todos can be grouped into lists in order to sort them.
-                You want to have seperates List for a work, home and shopping
-                or a project is around the corner? Sort your task to be able 
-                to focus on what matters for you right now.
-            li.
-                List and single todos can be shared with other contributors.
-                Have a shopping list for your partner or organize the next
-                gathering and assign task in order to never lose oversight
-                again
-            li.
-                Todos can have images, text and recordings added to them.
-                Sometimes a picture can tell more then a thousand words.
-                We enable you to use whatever you need to be as effective
-                as you wish to be.
+        div(class="tile-grid")
+            div(class="tile-grid-item")
+                div(class="tile-grid-item lists").
+                    Todos can be grouped into lists in order to sort them.
+                    You want to have seperates List for work, home and shopping
+                    or a project is around the corner? Sort your task to be able 
+                    to focus on what matters for you right now.
+        div(class="tile-grid")
+            div(class="tile-grid-item")
+                div(class="tile-grid-item share").
+                    List and single todos can be shared with other contributors.
+                    Have a shopping list for your partner or organize the next
+                    gathering and assign task in order to never lose oversight
+                    again
+        div(class="tile-grid")
+            div(class="tile-grid-item")
+                div(class="tile-grid-item multimedia").
+                    Todos can have images, text and recordings added to them.
+                    Sometimes a picture can tell more then a thousand words.
+                    We enable you to use whatever you need to be as effective
+                    as you wish to be.
         a( href="/welcome" class="btn" ) Link to welcome 
 
 block scripts
