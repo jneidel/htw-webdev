@@ -16,17 +16,29 @@ body {
   border-radius: 2rem;
   color: rgb(27, 27, 27);
   margin-top: 2rem;
-  padding: .5rem 1rem;
+  padding: 0rem 1.5rem;
   text-transform: uppercase;
   text-decoration: none;
   transition: background-color 300ms;
   position: absolute;
-  right: 20px;
+  right: 30px;
   bottom: -20px;
+}
+
+img{
+  height: 18px;
+  margin-left: 1rem;
 }
 
 .btn:hover{
   background-color: rgb(128, 128, 128);
+}
+
+.inline-items{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .center{

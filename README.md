@@ -31,3 +31,11 @@ Start the server:
 ```sh
 npm start
 ```
+
+## Attribution
+
+**Icons**
+
+- [Tick mark](https://www.flaticon.com/de/kostenloses-icon/tick_447147?term=tick&page=1&position=5&related_item_id=447147)
+
+
