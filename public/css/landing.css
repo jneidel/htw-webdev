@@ -11,21 +11,7 @@
   margin-top: 5rem;
 }
   
-.btn{
-  background-color: rgb(180, 180, 180);
-  border-radius: 2rem;
-  color: rgb(27, 27, 27);
-  margin-top: 2rem;
-  padding: 0rem 1.5rem;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: background-color 300ms;
-  position: absolute;
-  right: 30px;
-  bottom: -20px;
-}
-
-img{
+.tick{
   height: 30px;
   margin-left: 2.5rem;
   margin-right: 1rem;
@@ -42,26 +28,11 @@ img{
   text-align: center;
 }
 
-.btn:hover{
-  background-color: rgb(128, 128, 128);
-}
-
 .inline-items{
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-}
-
-.center{
-  margin: 0 auto;
-  vertical-align: middle;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  padding: 2.5rem;
 }
 
 .section-features{
@@ -80,17 +51,17 @@ img{
   justify-content: center;
   z-index: 1;
   border-radius: .5rem;
-  box-shadow: 5px 10px 10px gray;
+  box-shadow: 5px 5px 5px rgb(158, 158, 158);
 }
 
-.lists{
-  background-image: linear-gradient(120deg, rgba(255, 110, 105, 0.5), rgb(255,111,105));
+#lists{
+  background-image: linear-gradient(120deg, #ff6e6986, #ff6e69);
 }
 
-.share{
-  background-image: linear-gradient(120deg, rgba(255, 203, 92, 0.5), rgb(255,204,92));
+#share{
+  background-image: linear-gradient(120deg,#ffcb5c81, #ffcb5c);
 }
 
-.multimedia{
-  background-image: linear-gradient(120deg, rgba(136, 216, 176, 0.5), rgb(136,216,176));
+#multimedia{
+  background-image: linear-gradient(120deg, #88d8b083, #88d8b0);
 }
