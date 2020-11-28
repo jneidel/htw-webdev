@@ -5,41 +5,29 @@ block styles
 
 block main
     section(class="container")
-        h1  Be more productive
-        p.
-            "What to do" is an easy to use to-do application, designed for
-            individual or colaborativ use.
+        p#logo.landing What to do?
         .section-features
             .features.lists
-                p.
-                    Todos can be grouped into lists in order to sort them.
-                    You want to have seperate lists for work, home and shopping
-                    or a project is around the corner? Sort your task to be able 
-                    to focus on what matters for you.
-                a( href="/welcome" class="btn" )
-                    .inline-items
-                        p learn more
-                        img(src="/assets/img/tick.svg")
+                .inline-items
+                    p.
+                        Group tasks into lists in order to sort them.
+                        Want to have seperate lists for work, home and shopping
+                        or a project is around the corner? Sort your tasks to be able 
+                        to focus on what matters.
+                    img(src="/assets/img/tick.svg")
             .features.share
-                p.
-                    List and single todos can be shared with other contributors.
-                    Have a shopping list for your partner or organize the next
-                    gathering and assign task in order to never lose oversight
-                    again.
-                a( href="/welcome" class="btn" )
-                    .inline-items
-                        p learn more
-                        img(src="/assets/img/tick.svg")
+                .inline-items
+                    p.
+                        Share lists and tasks with other contributors.
+                        Have a shopping list for your partner or organize the next
+                        gathering and assign task in order to never lose oversight
+                        again.
+                    img(src="/assets/img/tick.svg")
             .features.multimedia
-                p.
-                    Todos can have images, text and recordings added to them.
-                    Sometimes a picture can tell more then a thousand words.
-                    We enable you to use whatever you need to be as effective
-                    as you wish to be.
-                a( href="/welcome" class="btn" )
-                    .inline-items
-                        p learn more
-                        img(src="/assets/img/tick.svg")
-
-block scripts
-    script( scr='../vue.js')
+                .inline-items
+                    p.
+                        Add images, text and recordings to your tasks.
+                        Sometimes a picture can tell more then a thousand words.
+                        We enable you to use whatever you need to be as effective
+                        as you wish to be.
+                    img(src="/assets/img/tick.svg")
