@@ -12,8 +12,8 @@
 
 - Node (backend)
 - Express (http server)
+- MariaDB (SQL database)
 - Vue@3 (spa framework)
-- SQL (database)
 - jest (test runner)
 - pug (html template)
 - eslint (linter)

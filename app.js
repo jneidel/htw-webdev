@@ -3,6 +3,7 @@ const helmet = require( "helmet" );
 const bodyParser = require( "body-parser" );
 const logger = require( "./util/logger" );
 const errorHandlers = require( "./util/errorHandlers" );
+const { configureDatabase } = require( "./util/database" );
 
 // load in environmental variables
 require( "dotenv" ).config( { path: ".env" } );
@@ -35,6 +36,11 @@ app.use( express.static( `${__dirname}/public` ) );
 // cleanup req.body
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded( { extended: true } ) );
+
+// setup db
+(async () => {
+  const db = configureDatabase( process.env );
+})()
 
 // routes
 app.use( "/", require( "./routes" ) );
