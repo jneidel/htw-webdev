@@ -1,6 +1,6 @@
 const { Sequelize } = require( "sequelize" );
 
-async function configureDatabase( env ) {
+module.exports = async function configureDatabase( env ) {
   const sequelize = new Sequelize( "wd_todo", "jneidel", "", {
     host          : "localhost",
     dialect       : "mariadb",
@@ -17,8 +17,4 @@ async function configureDatabase( env ) {
   } );
 
   return sequelize;
-}
-
-module.exports = {
-  configureDatabase,
 }

@@ -3,7 +3,8 @@ const helmet = require( "helmet" );
 const bodyParser = require( "body-parser" );
 const logger = require( "./util/logger" );
 const errorHandlers = require( "./util/errorHandlers" );
-const { configureDatabase } = require( "./util/database" );
+const configureDatabase = require( "./util/database" );
+const models = require( "./models" );
 
 // load in environmental variables
 require( "dotenv" ).config( { path: ".env" } );
@@ -39,7 +40,10 @@ app.use( bodyParser.urlencoded( { extended: true } ) );
 
 // setup db
 (async () => {
-  const db = configureDatabase( process.env );
+  const db = await configureDatabase( process.env );
+  const Todo = models.Todo( db );
+
+  // db.sync( { alter: true } ); // check all tables & make them match their model
 })()
 
 // routes
