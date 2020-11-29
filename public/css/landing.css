@@ -1,6 +1,7 @@
  body {
   min-height: 100vh;
   margin: 0;
+  background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("/assets/img/papers.jpeg");
 }
 
 .container{
@@ -18,12 +19,7 @@
   opacity: 30%;
 }
 
-#logo{
-  display: none;
-}
-
-#logo.landing{
-  display: block;
+.landing{
   font-size: 6rem;
   text-align: center;
 }
@@ -55,13 +51,13 @@
 }
 
 #lists{
-  background-image: linear-gradient(120deg, #ff6e6986, #ff6e69);
+  background-color: #ff6e69ee;
 }
 
 #share{
-  background-image: linear-gradient(120deg,#ffcb5c81, #ffcb5c);
+  background-color: #ffcb5cef;
 }
 
 #multimedia{
-  background-image: linear-gradient(120deg, #88d8b083, #88d8b0);
+  background-color: #88d8b0ee;
 }
