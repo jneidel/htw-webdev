@@ -6,7 +6,7 @@
 [![Heroku Deployment master](https://img.shields.io/badge/deployment-master-brightgreen?style=flat-square)](https://htw-wd-todo.herokuapp.com)
 [![License MIT](https://img.shields.io/badge/license-GPLv3-green.svg?style=flat-square)](LICENSE)
 
-[View App (master)](https://htw-wd-todo.herokuapp.com)
+[View App Deployment](https://htw-wd-todo.herokuapp.com)
 
 ## Stack
 
@@ -39,3 +39,6 @@ npm start
 - [Tick mark](https://www.flaticon.com/de/kostenloses-icon/tick_447147?term=tick&page=1&position=5&related_item_id=447147)
 
 
+## ER Diagram
+
+edit on [draw.io](https://app.diagrams.net/#Hjneidel%2Fhtw-webdev-todo%2Fer-diagramm%2Fhtw-wd-todo.drawio)
