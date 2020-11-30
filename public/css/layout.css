@@ -16,12 +16,12 @@ h1 {
 
 body {
   display: grid;
-  grid-template-columns: 0vw auto 0vw;
+  grid-template-columns: 6vw auto 6vw;
   grid-template-rows: 75px 1fr 60px;
   grid-template-areas:
     "header header header"
     ". content ."
-    ". footer .";
+    "footer footer footer";
   min-height: 100vh;
   margin: 0;
 }
