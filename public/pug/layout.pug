@@ -18,20 +18,18 @@ html
       #header-right.vertical-center
         - const isAuthorized = true // later set by on auth middleware
         if isAuthorized
-          a.underscored-link( href="/app" )
+          a.blue-btn( href="/app" )
             p Open App
         else
-          a.underscored-link( href="/login" )
+          a.blue-btn( href="/login" )
             p Login
 
     #main
       block main
 
     #footer
-      hr#footer-hr
       div.horizontal-center
-        div#footer-links
-          a.underscored-link( href="https://github.com/jneidel/htw-webdev-todo" ) Source
+        a.white-link#footer-link( href="https://github.com/jneidel/htw-webdev-todo" ) Source
 
     block scripts
 

@@ -1,8 +1,9 @@
  body {
   min-height: 100vh;
   margin: 0;
-  background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("/assets/img/papers.jpeg");
+  background-image: url("/assets/img/background-note.png");
   background-size: cover;
+  background-position: center;
 }
 
 .container{
@@ -10,55 +11,17 @@
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 5rem;
 }
   
-.tick{
-  height: 30px;
-  margin-left: 2.5rem;
-  margin-right: 1rem;
-  opacity: 30%;
+#splashtext{
+  font-family: Varela;
+  font-size: 5rem;
 }
 
-.landing{
-  font-size: 6rem;
-  text-align: center;
-}
-
-.inline-items{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.section-features{
-  margin-top: 1rem;
+#splashmessage{
+  font-size: 2rem;
+  max-width: 30rem;
   margin-bottom: 2rem;
 }
 
-.features{ 
-  padding: 3rem;
-  margin-top: 4rem;
-  margin-bottom: 4rem;
-  color: rgb(27, 27, 27);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  z-index: 1;
-  border-radius: .5rem;
-  box-shadow: 5px 5px 5px rgb(158, 158, 158);
-}
 
-#lists{
-  background-color: #ff6e69ee;
-}
-
-#share{
-  background-color: #ffcb5c;
-}
-
-#multimedia{
-  background-color: #88d8b0ee;
-}
