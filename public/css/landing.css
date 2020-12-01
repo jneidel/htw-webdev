@@ -1,8 +1,12 @@
  body {
   min-height: 100vh;
   margin: 0;
-  background-image: url("/assets/img/background-note.png"), linear-gradient(0, #ffffff2c, #ffffff2d), url("/assets/img/grid-texture.jpg");
-  background-size: cover;
+  background-image:
+    url("/assets/img/background-note.png"),
+    linear-gradient(0, #f3f3f3e8, #ffffff2d), 
+    url("/assets/img/grid-texture.jpg");
+  background-repeat: no-repeat, repeat, repeat;
+  background-size: cover, cover, cover;
   background-position: center;
 }
 
@@ -15,13 +19,15 @@
   
 #splashtext{
   font-family: Varela;
-  font-size: 5rem;
+  font-size: 7vw;
+  margin-bottom: auto;
 }
 
 #splashmessage{
-  font-size: 2rem;
+  font-size: 2.5vw;
   max-width: 30rem;
   margin-bottom: 2rem;
 }
+
 
 
