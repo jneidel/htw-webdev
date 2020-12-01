@@ -72,12 +72,12 @@ a#logo-link {
 #footer {
   grid-area: footer;
   width: auto;
-  background-color: rgb(119, 119, 119);
+  background-color: rgba(61, 61, 61, 0.89);
 }
 
 a.blue-btn {
   color: white;
-  background-color: #0066ff;
+  background-color: #0060f0;
   padding: .7rem 2rem;
   border-radius: 2rem;
   text-decoration: none;

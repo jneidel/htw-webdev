@@ -1,7 +1,7 @@
  body {
   min-height: 100vh;
   margin: 0;
-  background-image: url("/assets/img/background-note.png");
+  background-image: url("/assets/img/background-note.png"), linear-gradient(0, #ffffff2c, #ffffff2d), url("/assets/img/grid-texture.jpg");
   background-size: cover;
   background-position: center;
 }
