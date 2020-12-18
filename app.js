@@ -6,61 +6,74 @@ const errorHandlers = require( "./util/errorHandlers" );
 const configureDatabase = require( "./util/database" );
 const models = require( "./models" );
 
-// load in environmental variables
-require( "dotenv" ).config( { path: ".env" } );
-const { NODE_ENV } = process.env;
+( async () => { // allow for await use
+  // load in environmental variables
+  require( "dotenv" ).config( { path: ".env" } );
+  const { NODE_ENV } = process.env;
 
-// create server
-const app = express();
+  // create server
+  const app = express();
 
-/* server configuration */
-// logging
-if ( NODE_ENV === "dev" )
-  app.use( logger.dev );
-if ( NODE_ENV === "prod" ) {
-  app.use( logger.writeErrors );
-  app.use( logger.writeRequests );
-}
+  /* server configuration */
+  // logging
+  if ( NODE_ENV === "dev" )
+    app.use( logger.dev );
+  if ( NODE_ENV === "prod" ) {
+    app.use( logger.writeErrors );
+    app.use( logger.writeRequests );
+  }
 
-// security
-app.use(
-  helmet( { contentSecurityPolicy: false } )
-);
+  // security
+  app.use(
+    helmet( { contentSecurityPolicy: false } )
+  );
 
-// use pug as html template
-app.set( "view engine", "pug" );
-app.set( "views", `${__dirname}/public/pug` );
+  // use pug as html template
+  app.set( "view engine", "pug" );
+  app.set( "views", `${__dirname}/public/pug` );
 
-// serve static /js /css files
-app.use( express.static( `${__dirname}/public` ) );
+  // serve static /js /css files
+  app.use( express.static( `${__dirname}/public` ) );
 
-// cleanup req.body
-app.use( bodyParser.json() );
-app.use( bodyParser.urlencoded( { extended: true } ) );
+  // cleanup req.body
+  app.use( bodyParser.json() );
+  app.use( bodyParser.urlencoded( { extended: true } ) );
 
-// setup db
-(async () => {
+  // setup db
   const db = await configureDatabase( process.env );
-  const Todo = models.Todo( db );
+  app.use( ( req, res, next ) => {
+    req.db = db;
 
-  // db.sync( { alter: true } ); // check all tables & make them match their model
-})()
+    // initialize db tables
+    req.models = {
+      Todo: models.Todo( db ),
+    };
+    db.sync( { alter: true } ); // check all tables & make them match their model
+  } );
 
-// routes
-app.use( "/", require( "./routes" ) );
-app.use( "/api", require( "./routes/api" ) );
+  // routes
+  app.use( "/", require( "./routes" ) );
+  app.use( "/api", require( "./routes/api" ) );
 
-// route error handling
-app.use( ( req, res ) => { throw new Error( "Route not found" ); } );
-app.use( errorHandlers.notFound );
+  // route error handling
+  app.use( "/api", ( err, req, res, next ) => {
+    let errorMsg = err.message.split( ":" ); // format: '400: msg'
+    const errorCode = errorMsg.length > 1 ? Number( errorMsg.shift() ) || 500 : 500;
+    errorMsg = errorMsg.join( ":" ).strip();
 
-if ( NODE_ENV === "dev" )
-  app.use( errorHandlers.developmentErrors );
-else
-  app.use( errorHandlers.productionErrors );
+    res.status( errorCode ).json( { error: true, errorMsg } );
+  } );
+  app.use( ( req, res ) => { throw new Error( "Route not found" ); } );
+  app.use( errorHandlers.notFound );
 
-// start express server
-const port = process.env.PORT || 8000;
-app.listen( port, () => {
-  console.log( `Server running on: http://localhost:${port}.` ); // eslint-disable-line no-console
-} );
+  if ( NODE_ENV === "dev" )
+    app.use( errorHandlers.developmentErrors );
+  else
+    app.use( errorHandlers.productionErrors );
+
+  // start express server
+  const port = process.env.PORT || 8000;
+  app.listen( port, () => {
+    console.log( `Server running on: http://localhost:${port}.` ); // eslint-disable-line no-console
+  } );
+} )()

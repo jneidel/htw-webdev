@@ -1,12 +1,53 @@
 const express = require( "express" );
 const router = express.Router();
 
-// /api routes
-router.get( "/", ( req, res ) => {
-  res.sendStatus( 200 );
+// todo crud
+router.get( "/todos", ( req, res, next ) => {
+  req.Todo.findAll( {
+    attributes: [ "id", "text", "createdAt" ],
+    where: { done: false },
+  } )
+    .catch( err => next( err ) )
+    .then( todos => res.json( { error: false, todos } ) )
 } );
-router.get( "/:anything", ( req, res ) => {
-  res.sendStatus( 200 );
-} );
+
+router.routes
+  .post( "/todo", ( req, res, next ) => {
+    const { text } = req.body;
+    if ( !text )
+      return next( new Error( "400: empty todo text" ) );
+
+    req.models.Todo.create( { text } )
+      .catch( err => next( err ) )
+      .then( todo => res.json( { error: false, id: todo.id } ) )
+  } )
+  .put( "/todo", ( req, res, next ) => {
+    const { id, text, done } = req.body;
+    if ( !id )
+      return next( new Error( "400: missing todo id" ) );
+    if ( text === "" )
+      return next( new Error( "400: empty todo text" ) );
+    if ( text === undefined && done === undefined )
+      return next( new Error( "400: nothing to update" ) );
+
+    const updateObj = {};
+    if ( text !== undefined )
+      updateObj.text = text;
+    if ( done !== undefined )
+      updateObj.done = done;
+
+    req.Todo.update( updateObj, { where: { id } } )
+      .catch( err => next( err ) );
+      .then( () => res.json( { error: false } ) )
+  } )
+  .delete( "/todo", ( req, res, next ) => {
+    let { id } = req.body;
+    if ( !id )
+      return next( new Error( "400: missing todo id" ) );
+
+    req.Todo.destroy( { where: { id } } )
+      .catch( err => next( err ) )
+      .then( () => res.json( { error: false } ) )
+  } );
 
 module.exports = router;
