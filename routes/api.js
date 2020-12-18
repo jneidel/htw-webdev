@@ -7,21 +7,21 @@ router.get( "/todos", ( req, res, next ) => {
     attributes: [ "id", "text", "createdAt" ],
     where: { done: false },
   } )
-    .catch( err => next( err ) )
     .then( todos => res.json( { error: false, todos } ) )
+    .catch( err => next( err ) )
 } );
 
-router.routes
-  .post( "/todo", ( req, res, next ) => {
+router.route( "/todo" )
+  .post( ( req, res, next ) => {
     const { text } = req.body;
     if ( !text )
       return next( new Error( "400: empty todo text" ) );
 
     req.models.Todo.create( { text } )
-      .catch( err => next( err ) )
       .then( todo => res.json( { error: false, id: todo.id } ) )
+      .catch( err => next( err ) )
   } )
-  .put( "/todo", ( req, res, next ) => {
+  .put( ( req, res, next ) => {
     const { id, text, done } = req.body;
     if ( !id )
       return next( new Error( "400: missing todo id" ) );
@@ -37,17 +37,17 @@ router.routes
       updateObj.done = done;
 
     req.Todo.update( updateObj, { where: { id } } )
-      .catch( err => next( err ) );
       .then( () => res.json( { error: false } ) )
+      .catch( err => next( err ) )
   } )
-  .delete( "/todo", ( req, res, next ) => {
+  .delete( ( req, res, next ) => {
     let { id } = req.body;
     if ( !id )
       return next( new Error( "400: missing todo id" ) );
 
     req.Todo.destroy( { where: { id } } )
-      .catch( err => next( err ) )
       .then( () => res.json( { error: false } ) )
+      .catch( err => next( err ) )
   } );
 
 module.exports = router;

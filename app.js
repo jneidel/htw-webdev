@@ -48,7 +48,8 @@ const models = require( "./models" );
     req.models = {
       Todo: models.Todo( db ),
     };
-    db.sync( { alter: true } ); // check all tables & make them match their model
+    // db.sync( { alter: true } ); // check all tables & make them match their model
+    next();
   } );
 
   // routes
@@ -59,7 +60,8 @@ const models = require( "./models" );
   app.use( "/api", ( err, req, res, next ) => {
     let errorMsg = err.message.split( ":" ); // format: '400: msg'
     const errorCode = errorMsg.length > 1 ? Number( errorMsg.shift() ) || 500 : 500;
-    errorMsg = errorMsg.join( ":" ).strip();
+    errorMsg = errorMsg.join( ":" ).trim();
+    console.error( `${errorCode} ${req.method} /api${req.url} - ${errorMsg}` );
 
     res.status( errorCode ).json( { error: true, errorMsg } );
   } );
