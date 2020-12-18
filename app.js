@@ -57,14 +57,7 @@ const models = require( "./models" );
   app.use( "/api", require( "./routes/api" ) );
 
   // route error handling
-  app.use( "/api", ( err, req, res, next ) => {
-    let errorMsg = err.message.split( ":" ); // format: '400: msg'
-    const errorCode = errorMsg.length > 1 ? Number( errorMsg.shift() ) || 500 : 500;
-    errorMsg = errorMsg.join( ":" ).trim();
-    console.error( `${errorCode} ${req.method} /api${req.url} - ${errorMsg}` );
-
-    res.status( errorCode ).json( { error: true, errorMsg } );
-  } );
+  app.use( "/api", require( "./routes/apiErrorHandler" );
   app.use( ( req, res ) => { throw new Error( "Route not found" ); } );
   app.use( errorHandlers.notFound );
 
