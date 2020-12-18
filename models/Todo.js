@@ -3,10 +3,10 @@ const { DataTypes } = require( "sequelize" );
 module.exports = function Todo( db ) {
   return db.define( "Todo", {
     id: {
-      type: DataTypes.UUID,
+      type        : DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
-      allowNull: false
+      primaryKey  : true,
+      allowNull   : false,
     },
     // mangaged by Sequelize as createdAt
     // date: {
@@ -15,15 +15,15 @@ module.exports = function Todo( db ) {
     //   allowNull: false
     // },
     text: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type     : DataTypes.STRING,
+      allowNull: false,
     },
     done: {
-      type: DataTypes.BOOLEAN,
+      type        : DataTypes.BOOLEAN,
       defaultValue: false,
-      allowNull: false
-    }
+      allowNull   : false,
+    },
   }, {
     tableName: "todos",
   } );
-}
+};

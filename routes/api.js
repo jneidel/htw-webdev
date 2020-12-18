@@ -3,12 +3,12 @@ const router = express.Router();
 
 // todo crud
 router.get( "/todos", ( req, res, next ) => {
-  req.Todo.findAll( {
+  req.models.Todo.findAll( {
     attributes: [ "id", "text", "createdAt" ],
-    where: { done: false },
+    where     : { done: false },
   } )
     .then( todos => res.json( { error: false, todos } ) )
-    .catch( err => next( err ) )
+    .catch( err => next( err ) );
 } );
 
 router.route( "/todo" )
@@ -19,7 +19,7 @@ router.route( "/todo" )
 
     req.models.Todo.create( { text } )
       .then( todo => res.json( { error: false, id: todo.id } ) )
-      .catch( err => next( err ) )
+      .catch( err => next( err ) );
   } )
   .put( ( req, res, next ) => {
     const { id, text, done } = req.body;
@@ -36,18 +36,18 @@ router.route( "/todo" )
     if ( done !== undefined )
       updateObj.done = done;
 
-    req.Todo.update( updateObj, { where: { id } } )
+    req.models.Todo.update( updateObj, { where: { id } } )
       .then( () => res.json( { error: false } ) )
-      .catch( err => next( err ) )
+      .catch( err => next( err ) );
   } )
   .delete( ( req, res, next ) => {
-    let { id } = req.body;
+    const { id } = req.body;
     if ( !id )
       return next( new Error( "400: missing todo id" ) );
 
-    req.Todo.destroy( { where: { id } } )
+    req.models.Todo.destroy( { where: { id } } )
       .then( () => res.json( { error: false } ) )
-      .catch( err => next( err ) )
+      .catch( err => next( err ) );
   } );
 
 module.exports = router;
