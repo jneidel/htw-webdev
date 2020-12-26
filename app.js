@@ -57,7 +57,7 @@ const models = require( "./models" );
   app.use( "/api", require( "./routes/api" ) );
 
   // route error handling
-  app.use( "/api", require( "./routes/apiErrorHandler" );
+  app.use( "/api", require( "./routes/apiErrorHandler" ) );
   app.use( ( req, res ) => { throw new Error( "Route not found" ); } );
   app.use( errorHandlers.notFound );
 

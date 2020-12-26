@@ -2,12 +2,10 @@ const { Sequelize } = require( "sequelize" );
 
 module.exports = async function configureDatabase( env ) {
   const sequelize = new Sequelize( "wd_todo", "jneidel", "", {
-    host          : "localhost",
-    dialect       : "mariadb",
-    logging       : env.NODE_ENV === "prod" ? false : console.log,
-    dialectOptions: {
-      timezone: "Etc/GMT0", // suppress warning
-    },
+    host           : "localhost",
+    dialect        : "mariadb",
+    logging        : env.NODE_ENV === "prod" ? false : console.log,
+    skipSetTimezone: true,
   } );
 
   // test db connection
