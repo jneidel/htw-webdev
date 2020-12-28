@@ -1,7 +1,6 @@
 @font-face {
-  font-family: Alfien;
-  font-weight: bold;
-  src: url( "/assets/fonts/Alfien.otf" ) format( "opentype" );
+  font-family: Varela;
+  src: url( "/assets/fonts/VarelaRound-Regular.ttf" );
 }
 
 html {
@@ -22,7 +21,7 @@ body {
   grid-template-areas:
     "header header header"
     ". content ."
-    ". footer .";
+    "footer footer footer";
   min-height: 100vh;
   margin: 0;
 }
@@ -37,26 +36,21 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-
-  box-shadow: 0 0 5px #333;
-  background: rgba( #333, .1 );
-}
-#header:hover {
-	box-shadow: 0 0 8px #333;
 }
 
 /* left header: logo */
 #header-left {
-  padding: 21px 23px;
+  padding: 20px 23px;
 }
 
 a#logo-link {
   text-decoration: none;
   color: #333;
 }
-#logo {
+
+.logo {
   font-size: 40px;
-  font-family: Alfien, Lato, Arial;
+  font-family: Varela, Arial;
   margin: 0;
 }
 
@@ -69,6 +63,7 @@ a#logo-link {
 #header-right p {
   margin: 0;
 }
+
 #header-right a {
   margin: 0 0 10px 0;
 }
@@ -76,24 +71,32 @@ a#logo-link {
 /* footer */
 #footer {
   grid-area: footer;
+  width: auto;
+  background-color: rgba(61, 61, 61, 0.89);
 }
 
-#footer-hr {
-  width: 60vw;
-  height: 1px;
-  border: 0;
-  background-image: linear-gradient( to right, rgba(0, 0, 0, 0), #333, rgba(0, 0, 0, 0) );
+a.blue-btn {
+  color: white;
+  background-color: #0060f0;
+  padding: .7rem 2rem;
+  border-radius: 2rem;
+  text-decoration: none;
+}
+
+a.blue-btn:hover{
+  box-shadow: 0 0 5px #333;
 }
 
 /* link style */
-a.underscored-link {
-  border-bottom: 1px #333 solid;
-  color: #333;
+a.white-link {
+  color: #fff;
   text-decoration: none;
 }
-a.underscored-link:hover {
-  color: #FF005F;
-  border-bottom-color: transparent;
+a.white-link:hover {
+  color: #0066ff;
+}
+#footer-link{
+  margin:1rem;
 }
 
 /* positioning */
