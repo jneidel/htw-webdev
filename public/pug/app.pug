@@ -1,0 +1,19 @@
+extends layout
+
+block styles
+  link( rel="stylesheet" type="text/css" href="../css/app.css" )
+
+block main
+  input( autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newTodo" @keyup.enter="addTodo" ).new-todo
+  section( v-show="todos.length" )
+    ul.todo-list
+      li( v-for="todo in todos" :key="todo.id" :class="{completed: todo.completed, editing: todo == editedTodo}" ).todo
+        div.view
+          input( type="checkbox" v-model="todo.completed" ).toggle
+          label( @dblclick="editTodo(todo)">"{{todo.text}}" )
+          button( @click="removeTodo(todo)" ).destroy
+        input( type="text" v-model="todo.text" @keyup.enter="doneEdit(todo)" ).edit
+
+block scripts
+  script( src="../assets/vue.js" )
+  script( src="../js/app.js" type="module" )
