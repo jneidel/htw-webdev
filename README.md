@@ -40,3 +40,67 @@ npm start
 ## ER Diagram
 
 edit on [draw.io](https://app.diagrams.net/#Hjneidel%2Fhtw-webdev-todo%2Fer-diagramm%2Fhtw-wd-todo.drawio)
+
+## API
+
+Response format:
+```json
+{
+  "error": false,
+  "errorMsg": "",
+  ...
+}
+```
+
+### GET `/api/todos`
+
+Get all todos.
+
+Res:
+```json
+{
+  "todos": []
+}
+```
+
+### POST `/api/todo`
+
+Insert a todo.
+
+Req:
+```json
+{
+  "text": "todo text"
+}
+```
+
+Res:
+```
+{
+  "id": "uuid"
+}
+```
+
+### PUT `/api/todo`
+
+Update a todo.
+
+Req:
+```json
+{
+  "id": "uuid",
+  "text?": "updated todo text",
+  "done?": true
+}
+```
+
+### DELETE `/api/todo`
+
+Delete a todo.
+
+Req:
+```json
+{
+  "id": "uuid"
+}
+```
