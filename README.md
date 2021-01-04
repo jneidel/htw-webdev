@@ -24,12 +24,24 @@
 npm install
 ```
 
+Install database
+
+```sh
+yay -S mariadb
+```
+
 ## Usage
 
 Start the server:
 
 ```sh
 npm start
+```
+
+Start the database:
+
+```sh
+sudo systemctl start mysql
 ```
 
 ## Attribution
