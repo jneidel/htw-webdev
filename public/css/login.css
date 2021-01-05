@@ -1,0 +1,46 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    background-image:
+      linear-gradient(0, #f3f3f3d5, #f3f3f3f3), 
+      url("/assets/img/grid-texture.jpg");
+    background-repeat: repeat, repeat;
+    overflow: hidden;
+    background-position: center;
+}
+
+#boarder{
+    margin: 0;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background-color: #ffc953;
+    padding: 3rem;
+    padding-bottom: 4rem;
+    padding-top: 2rem;
+    border-radius: 1rem;
+}
+
+#credentials{
+   margin-bottom: 2rem;
+}
+
+#spaced{
+    margin-left: 1rem;
+}
+
+.textbox input{
+    border: none;
+    outline: none;
+}
+
+a.black-link {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+a.white-link:hover {
+    color: #0066ff;
+}
