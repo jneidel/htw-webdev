@@ -32,11 +32,6 @@ Start the server:
 npm start
 ```
 
-## Attribution
-
-**Icons**
-- [Tick mark](https://www.flaticon.com/de/kostenloses-icon/tick_447147)
-
 ## ER Diagram
 
 edit on [draw.io](https://app.diagrams.net/#Hjneidel%2Fhtw-webdev-todo%2Fer-diagramm%2Fhtw-wd-todo.drawio)
