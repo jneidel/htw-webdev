@@ -12,7 +12,6 @@ const session = require("express-session");
 const passport_config = require("../util/passport-config");
 
 const initializePassport = passport_config.initialize;
-const checkAuthenticated = passport_config.checkAuthenticated;
 const checkNotAuthenticated = passport_config.checkNotAuthenticated
 const sess = passport_config.sess;
 
