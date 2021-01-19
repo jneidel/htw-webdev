@@ -7,9 +7,10 @@ block main
     #boarder
         h1 login
         #credentials
-            .textbox
-                input(type='email', placeholder='Email')
-            .textbox
-                input(type='password', placeholder='Password')
-        a.blue-btn(href="home") sign in
-        a.black-link#spaced(href="home") sign up
+            form(action="api/login", method="post")
+                .textbox
+                    input(type='email', id="email", name="email" placeholder='Email')
+                .textbox
+                    input(type='password', id="password", name="password" placeholder='Password')
+                button(type="submit") sign in
+                a.black-link#spaced(href="register") sign up

@@ -16,7 +16,7 @@ html
         a#logo-link( href="/" )
           p.logo What to do?
       #header-right.vertical-center
-        - const isAuthorized = true // later set by on auth middleware
+        - const isAuthorized = false // later set by on auth middleware
         if isAuthorized
           a.blue-btn( href="/app" )
             p Open App

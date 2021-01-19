@@ -37,3 +37,7 @@ body {
   margin-top: -100%;
   margin-left: -120%;
 }
+
+input {
+  display: block;
+}

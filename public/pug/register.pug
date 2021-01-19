@@ -1,4 +1,20 @@
 extends layout
 
+block styles
+    link(rel="stylesheet" type="text/css" href="../css/login.css")
+
 block main
-    h register
+    #boarder
+        h1 register
+        #credentials
+            form(action="api/register", method="post")
+                .textbox
+                    input(type='name', id="name", name="name" placeholder='Name')
+                .textbox
+                    input(type='email', id="email", name="email" placeholder='Email')
+                .textbox
+                    input(type='password', id="password", name="password" placeholder='Password')
+                .textbox
+                    input(type='confirmpassword', id="confirmpassword", name="confirmpassword", placeholder='Confirm Password')
+                button(type="submit") register
+                a.black-link#spaced(href="login") sign in
