@@ -9,7 +9,7 @@ const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
 
-const passport_config = require("../util/passport-config");
+const passport_config = require("../util/passportUtil");
 
 const initializePassport = passport_config.initialize;
 const checkNotAuthenticated = passport_config.checkNotAuthenticated
