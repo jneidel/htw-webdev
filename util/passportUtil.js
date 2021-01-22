@@ -12,12 +12,14 @@ const sess = {
 
 function initialize(passport) {
     const authenticateUser = async (email, password, done) => {
-        console.log(email + password)
         const db = await configureDatabase(process.env);
         const User = models.User(db);
         let failMessage = "Authentication failed"
         const user = await User.findOne(
-            { where: { email: email } }
+            {
+                where: { email: email },
+                raw: true
+            }
         );
         console.log(user)
         if (user == null) {
@@ -26,7 +28,6 @@ function initialize(passport) {
 
         try {
             if (await bcrypt.compare(password, user.password)) {
-                console.log("awaiting encryption")
                 return done(null, user)
             } else {
                 return done(null, false, { message: failMessage })
@@ -36,11 +37,15 @@ function initialize(passport) {
         }
     }
     passport.use(new LocalStrategy({ usernameField: "email" }, authenticateUser))
-    console.log("user authenticated")
     passport.serializeUser((user, done) => done(null, user.id))
     passport.deserializeUser((id, done) => async () => {
+        const db = await configureDatabase(process.env);
+        const User = models.User(db);
         const user = await User.findOne(
-            { where: { id: id } }
+            {
+                where: { id: id },
+                raw: true
+            }
         );
         return done(null, user)
     })

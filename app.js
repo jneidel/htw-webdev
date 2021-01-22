@@ -58,7 +58,7 @@ const sess = passport_config.sess;
     req.models = {
       User
     };
-    //db.sync( { alter: true } ); // check all tables & make them match their model
+    db.sync( { alter: true } ); // check all tables & make them match their model
     next();
   });
 
