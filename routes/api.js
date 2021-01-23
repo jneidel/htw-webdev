@@ -6,6 +6,7 @@ router.route( "/todos" )
   .get( ( req, res, next ) => {
   req.models.Todo.findAll( {
     attributes: [ "id", "text", "createdAt", "done" ],
+    order     : [ ["createdAt", "DESC" ] ],
   } )
     .then( todos => res.json( { error: false, todos } ) )
     .catch( err => next( err ) );

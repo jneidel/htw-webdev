@@ -37,7 +37,7 @@ const App = {
       request( "/todo", "POST", { text: value } )
         .then( res => res.json() )
         .then( ( { id } ) => {
-          this.todos.push( { id, text: value, done: false } );
+          this.todos.unshift( { id, text: value, done: false } );
         } );
 
       this.newTodo = "";
