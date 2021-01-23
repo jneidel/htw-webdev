@@ -1,6 +1,6 @@
 function request( route, method, data ) { // non get
-  return fetch( "/api/" + route, { method, body: JSON.stringify( data ), headers: { 'Content-Type': 'application/json' } } )
-    .catch( e => console.log( e ) );
+  return fetch( `/api/${  route}`, { method, body: JSON.stringify( data ), headers: { "Content-Type": "application/json" } } )
+    .catch( err => console.log( err ) );
 }
 
 const App = {
@@ -10,7 +10,7 @@ const App = {
       todos  : [],
     };
   },
-  mounted: function() {
+  mounted() {
     fetch( "/api/todos" )
       .then( res => res.json() )
       .then( data => {
@@ -36,14 +36,14 @@ const App = {
 
       request( "/todo", "POST", { text: value } )
         .then( res => res.json() )
-        .then( ({ id }) => {
+        .then( ( { id } ) => {
           this.todos.push( { id, text: value, done: false } );
         } );
 
       this.newTodo = "";
     },
     removeTodo( todo ) {
-      request( "/todo", "DELETE", { id: todo.id } )
+      request( "/todo", "DELETE", { id: todo.id } );
 
       const index = this.todos.indexOf( todo );
       this.todos.splice( index, 1 );
@@ -53,10 +53,10 @@ const App = {
       if ( !todo.text )
         this.removeTodo( todo );
 
-      request( "/todo", "PUT", { id: todo.id, text: todo.text } )
+      request( "/todo", "PUT", { id: todo.id, text: todo.text } );
     },
     toggleCompleted( todo ) {
-      request( "/todo", "PUT", { id: todo.id, done: !todo.done } ) // done inverted bc it has not updated yet via v-model
+      request( "/todo", "PUT", { id: todo.id, done: !todo.done } ); // done inverted bc it has not updated yet via v-model
     },
     removeCompleted() {
       this.todos = this.todos.filter( t => !t.done );

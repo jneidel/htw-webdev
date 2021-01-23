@@ -87,7 +87,7 @@ describe( "PUT /api/todo", () => {
     const data = { id: "123", text: "myText" };
 
     const res = await request( app )
-      .put( "/api/todo")
+      .put( "/api/todo" )
       .send( data );
 
     expect( res.status ).toBe( 200 );
@@ -98,7 +98,7 @@ describe( "PUT /api/todo", () => {
     const data = { id: "123", done: false };
 
     const res = await request( app )
-      .put( "/api/todo")
+      .put( "/api/todo" )
       .send( data );
 
     expect( res.status ).toBe( 200 );
@@ -109,7 +109,7 @@ describe( "PUT /api/todo", () => {
     const data = { id: "123", text: "myText", done: true };
 
     const res = await request( app )
-      .put( "/api/todo")
+      .put( "/api/todo" )
       .send( data );
 
     expect( res.status ).toBe( 200 );
@@ -121,7 +121,7 @@ describe( "PUT /api/todo", () => {
     const data = { id: "", text: "myText", done: true };
 
     const res = await request( app )
-      .put( "/api/todo")
+      .put( "/api/todo" )
       .send( data );
 
     expect( res.status ).toBe( 400 );
@@ -132,7 +132,7 @@ describe( "PUT /api/todo", () => {
     const data = { id: "213", text: "", done: true };
 
     const res = await request( app )
-      .put( "/api/todo")
+      .put( "/api/todo" )
       .send( data );
 
     expect( res.status ).toBe( 400 );
@@ -143,7 +143,7 @@ describe( "PUT /api/todo", () => {
     const data = { id: "213" };
 
     const res = await request( app )
-      .put( "/api/todo")
+      .put( "/api/todo" )
       .send( data );
 
     expect( res.status ).toBe( 400 );
