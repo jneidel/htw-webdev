@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt")
 const configureDatabase = require("./database");
 const models = require("../models");
 
+let db, User;
 
 const sess = {
     secret: process.env.SESSION_SECRET,
@@ -12,8 +13,8 @@ const sess = {
 
 function initialize(passport) {
     const authenticateUser = async (email, password, done) => {
-        const db = await configureDatabase(process.env);
-        const User = models.User(db);
+        db = await configureDatabase(process.env);
+        User = models.User(db);
         let failMessage = "Authentication failed"
         const user = await User.findOne(
             {
@@ -41,8 +42,6 @@ function initialize(passport) {
     passport.serializeUser((user, done) => done(null, user.id))
     passport.deserializeUser(async (id, done) => {
         console.log("deserilaizing")
-        const db = await configureDatabase(process.env);
-        const User = models.User(db);
         const user = await User.findOne(
             {
                 where: { id: id },
