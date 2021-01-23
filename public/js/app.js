@@ -1,16 +1,28 @@
+function request( route, method, data ) { // non get
+  return fetch( "/api/" + route, { method, body: JSON.stringify( data ), headers: { 'Content-Type': 'application/json' } } )
+    .catch( e => console.log( e ) );
+}
+
 const App = {
   data() {
     return {
       newTodo: "",
-      todos  : [ // load from db
-        { id: 123, completed: false, text: "big chungus" },
-      ],
+      todos  : [],
     };
   },
+  mounted: function() {
+    fetch( "/api/todos" )
+      .then( res => res.json() )
+      .then( data => {
+        if ( data.error )
+          throw new Error( data.errorMsg );
 
+        this.todos = data.todos;
+      } );
+  },
   computed: {
     remaining() {
-      return this.todos.filter( t => !t.completed ).length;
+      return this.todos.filter( t => !t.done ).length;
     },
   },
   methods: {
@@ -19,26 +31,35 @@ const App = {
     },
     addTodo() {
       const value = this.newTodo && this.newTodo.trim();
-      console.log( `Adding: ${  value}` );
-      if ( !value ) return;
-      this.todos.push( { id: this.todos.length + 1, text: value, completed: false } ); // put tempId, to be replaced w/ uuid from db
+      if ( !value )
+        return;
+
+      request( "/todo", "POST", { text: value } )
+        .then( res => res.json() )
+        .then( ({ id }) => {
+          this.todos.push( { id, text: value, done: false } );
+        } );
+
       this.newTodo = "";
-      // sync w/ db
     },
     removeTodo( todo ) {
+      request( "/todo", "DELETE", { id: todo.id } )
+
       const index = this.todos.indexOf( todo );
-      console.log( `Removing: ${  this.todos[index].text}` );
       this.todos.splice( index, 1 );
-      // sync w/ db
     },
     edit( todo ) {
-      console.log( `Done editing: ${  todo.text}` );
       todo.text = todo.text.trim();
-      if ( !todo.text ) this.removeTodo( todo );
-      // sync w/ db
+      if ( !todo.text )
+        this.removeTodo( todo );
+
+      request( "/todo", "PUT", { id: todo.id, text: todo.text } )
+    },
+    toggleCompleted( todo ) {
+      request( "/todo", "PUT", { id: todo.id, done: !todo.done } ) // done inverted bc it has not updated yet via v-model
     },
     removeCompleted() {
-      this.todos = this.todos.filter( t => !t.completed );
+      this.todos = this.todos.filter( t => !t.done );
       // sync w/ db
     },
   },

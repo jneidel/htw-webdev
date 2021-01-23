@@ -4,8 +4,7 @@ const router = express.Router();
 // todo crud
 router.get( "/todos", ( req, res, next ) => {
   req.models.Todo.findAll( {
-    attributes: [ "id", "text", "createdAt" ],
-    where     : { done: false },
+    attributes: [ "id", "text", "createdAt", "done" ],
   } )
     .then( todos => res.json( { error: false, todos } ) )
     .catch( err => next( err ) );
