@@ -2,13 +2,20 @@ const express = require( "express" );
 const router = express.Router();
 
 // todo crud
-router.get( "/todos", ( req, res, next ) => {
+router.route( "/todos" )
+  .get( ( req, res, next ) => {
   req.models.Todo.findAll( {
     attributes: [ "id", "text", "createdAt", "done" ],
   } )
     .then( todos => res.json( { error: false, todos } ) )
     .catch( err => next( err ) );
-} );
+  } )
+  .delete( ( req, res, next ) => {
+    // delete all done todos
+    req.models.Todo.destroy( { where: { done: true } } )
+      .then( () => res.json( { error: false } ) )
+      .catch( err => next( err ) );
+  } )
 
 router.route( "/todo" )
   .post( ( req, res, next ) => {

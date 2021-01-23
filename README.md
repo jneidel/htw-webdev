@@ -75,6 +75,15 @@ Res:
 }
 ```
 
+### DELETE `/api/todos`
+
+Remove all completed todos.
+
+Res:
+```json
+{}
+```
+
 ### POST `/api/todo`
 
 Insert a todo.

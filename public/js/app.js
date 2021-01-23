@@ -1,4 +1,4 @@
-function request( route, method, data ) { // non get
+function request( route, method, data = {} ) { // non get
   return fetch( `/api/${  route}`, { method, body: JSON.stringify( data ), headers: { "Content-Type": "application/json" } } )
     .catch( err => console.log( err ) );
 }
@@ -60,7 +60,7 @@ const App = {
     },
     removeCompleted() {
       this.todos = this.todos.filter( t => !t.done );
-      // sync w/ db
+      request( "/todos", "DELETE" )
     },
   },
 };
