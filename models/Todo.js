@@ -8,12 +8,6 @@ module.exports = function Todo( db ) {
       primaryKey  : true,
       allowNull   : false,
     },
-    // mangaged by Sequelize as createdAt
-    // date: {
-    //   type: DataTypes.DATE,
-    //   defaultValue: DataTypes.NOW,
-    //   allowNull: false
-    // },
     text: {
       type     : DataTypes.STRING,
       allowNull: false,
@@ -23,6 +17,7 @@ module.exports = function Todo( db ) {
       defaultValue: false,
       allowNull   : false,
     },
+    // date mangaged by Sequelize as createdAt
   }, {
     tableName: "todos",
   } );
