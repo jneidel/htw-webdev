@@ -28,6 +28,7 @@ function initialize(passport) {
 
         try {
             if (await bcrypt.compare(password, user.password)) {
+                console.log("user found")
                 return done(null, user)
             } else {
                 return done(null, false, { message: failMessage })
@@ -38,7 +39,8 @@ function initialize(passport) {
     }
     passport.use(new LocalStrategy({ usernameField: "email" }, authenticateUser))
     passport.serializeUser((user, done) => done(null, user.id))
-    passport.deserializeUser((id, done) => async () => {
+    passport.deserializeUser(async (id, done) => {
+        console.log("deserilaizing")
         const db = await configureDatabase(process.env);
         const User = models.User(db);
         const user = await User.findOne(
@@ -59,6 +61,7 @@ function checkAuthenticated(req, res, next) {
 }
 
 function checkNotAuthenticated(req, res, next) {
+    console.log("checking not-authentication")
     if (req.isAuthenticated()) {
         return res.redirect("/home")
     }
