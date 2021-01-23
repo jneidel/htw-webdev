@@ -1,0 +1,23 @@
+extends layout
+
+block styles
+  link( rel="stylesheet" type="text/css" href="../css/app.css" )
+
+block main
+  div
+    input( type="text" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newTodo" @keyup.enter="addTodo" ).new-todo
+    section( v-show="todos.length" )
+      ul#todo-list
+        li( v-for="todo in todos" :key="todo.id" :class="{completed: todo.done}" ).todo
+          span
+            input( type="checkbox" v-model="todo.done" @click="toggleCompleted( todo )" ).toggle
+            input( type="text" v-model="todo.text" @keyup.enter="edit( todo )" ).edit
+          button( @click="removeTodo( todo )" ).destroy
+            img( src="../assets/img/delete.png" style="margin: 0;" )
+    section#todo-footer( v-show="todos.length" )
+      p {{remaining}} {{pluralize('item', remaining)}} left
+      button.clear-completed( @click="removeCompleted" v-show="todos.length > remaining" ) Clear completed
+
+block scripts
+  script( src="../assets/vue.js" )
+  script( src="../js/app.js" type="module" )

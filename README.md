@@ -12,8 +12,8 @@
 
 - Node (backend)
 - Express (http server)
+- MariaDB (SQL database)
 - Vue@3 (spa framework)
-- SQL (database)
 - jest (test runner)
 - pug (html template)
 - eslint (linter)
@@ -24,12 +24,24 @@
 npm install
 ```
 
+Install database
+
+```sh
+yay -S mariadb
+```
+
 ## Usage
 
 Start the server:
 
 ```sh
 npm start
+```
+
+Start the database:
+
+```sh
+sudo systemctl start mysql
 ```
 
 ## Attribution
@@ -40,3 +52,76 @@ npm start
 ## ER Diagram
 
 edit on [draw.io](https://app.diagrams.net/#Hjneidel%2Fhtw-webdev-todo%2Fer-diagramm%2Fhtw-wd-todo.drawio)
+
+## API
+
+Response format:
+```json
+{
+  "error": false,
+  "errorMsg": "",
+  ...
+}
+```
+
+### GET `/api/todos`
+
+Get all todos.
+
+Res:
+```json
+{
+  "todos": []
+}
+```
+
+### DELETE `/api/todos`
+
+Remove all completed todos.
+
+Res:
+```json
+{}
+```
+
+### POST `/api/todo`
+
+Insert a todo.
+
+Req:
+```json
+{
+  "text": "todo text"
+}
+```
+
+Res:
+```
+{
+  "id": "uuid"
+}
+```
+
+### PUT `/api/todo`
+
+Update a todo.
+
+Req:
+```json
+{
+  "id": "uuid",
+  "text?": "updated todo text",
+  "done?": true
+}
+```
+
+### DELETE `/api/todo`
+
+Delete a todo.
+
+Req:
+```json
+{
+  "id": "uuid"
+}
+```
