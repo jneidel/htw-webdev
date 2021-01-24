@@ -2,8 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("supertest");
 const passport = require("passport");
-const flash = require("express-flash");
-const session = require("express-session");
 const passport_config = require("../../util/passportUtil");
 
 // apiErrorHandler middleware logs errors
@@ -63,7 +61,7 @@ describe(" POST /api/login", () => {
         password: "w"
       });
 
-    //expect(res.body.errorMsg).toBe("");
+    expect(res.text).toBe("Found. Redirecting to /home");
     expect(res.status).toBe(302);
     expect(res.body.error).toBeFalsy();
   });
