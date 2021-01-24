@@ -9,6 +9,7 @@ const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
 const passport_config = require("./util/passportUtil");
+const methodeOverride = require("method-override");
 
 (async () => { // allow for await use
   // load in environmental variables
@@ -26,6 +27,8 @@ const passport_config = require("./util/passportUtil");
     app.use(logger.writeErrors);
     app.use(logger.writeRequests);
   }
+
+  app.use(methodeOverride("_method"));
 
   // security
   app.use(
