@@ -1,23 +1,21 @@
 const LocalStrategy = require("passport-local").Strategy
 const bcrypt = require("bcrypt")
 
-function initialize(passport, User) {
-    const authenticateUser = async (email, password, done) => {
+function initialize(passport) {
+    const authenticateUser = async (req, email, password, done) => {
         let failMessage = "Authentication failed"
-        const user = await User.findOne(
+        const user = await req.models.User.findOne(
             {
                 where: { email: email },
                 raw: true
             }
         );
-        console.log(user)
         if (user == null) {
             return done(null, false, { message: failMessage })
         }
 
         try {
             if (await bcrypt.compare(password, user.password)) {
-                console.log("user found")
                 return done(null, user)
             } else {
                 return done(null, false, { message: failMessage })
@@ -26,11 +24,13 @@ function initialize(passport, User) {
             return done(e)
         }
     }
-    passport.use(new LocalStrategy({ usernameField: "email" }, authenticateUser))
+    passport.use(new LocalStrategy({
+        usernameField: "email",
+        passReqToCallback: true
+    }, authenticateUser))
     passport.serializeUser((user, done) => done(null, user.id))
-    passport.deserializeUser(async (id, done) => {
-        console.log("deserilaizing")
-        const user = await User.findOne(
+    passport.deserializeUser(async (req, id, done) => {
+        const user = await req.models.User.findOne(
             {
                 where: { id: id },
                 raw: true
@@ -48,7 +48,6 @@ function checkAuthenticated(req, res, next) {
 }
 
 function checkNotAuthenticated(req, res, next) {
-    console.log("checking not-authentication")
     if (req.isAuthenticated()) {
         return res.redirect("/home")
     }

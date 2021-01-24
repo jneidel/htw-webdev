@@ -27,14 +27,11 @@ beforeEach(() => {
     create: DBresolvedReq(),
     findOne: DBresolvedReq()
   }
+  
   app.use((req, res, next) => {
     req.models = { User: UserMock };
     next();
   });
-
-  app.use(passport.initialize());
-  app.use(passport.session());
-  passport_config.initialize(passport, UserMock);
 
   app.use("/api", require("../../routes/api"));
   app.use("/api", require("../../routes/apiErrorHandler"));
@@ -59,6 +56,7 @@ describe(" POST /api/login", () => {
         password: "w"
       });
 
+    expect(res.body.errorMsg).toBe( "" );
     expect(res.status).toBe(302);
     expect(res.body.error).toBeFalsy();
   });
