@@ -46,14 +46,10 @@ beforeEach(() => {
   app.use(passport.session());
   passport_config.initialize(passport);
 
+  app.use("/", require("../../routes"));
   app.use("/api", require("../../routes/api"));
   app.use("/api", require("../../routes/apiErrorHandler"));
 });
-
-afterEach(() => {
-  //async () => await request(app)
-  //  .delete("/api/logout");
-})
 
 describe(" POST /api/login", () => {
   test("login succesful", async () => {
@@ -99,7 +95,6 @@ describe(" POST /api/login", () => {
         password: "blub"
       });
 
-    //expect(res.body.errorMsg).toBe("");
     expect(res.text).toBe("Found. Redirecting to /login");
     expect(res.status).toBe(302);
     expect(res.body.error).toBeFalsy();
