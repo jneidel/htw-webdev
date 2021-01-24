@@ -48,7 +48,6 @@ const methodeOverride = require("method-override");
 
   // setup db
   const db = await configureDatabase(process.env);
-  const User = models.User(db);
   app.use((req, res, next) => {
     req.db = db;
 
