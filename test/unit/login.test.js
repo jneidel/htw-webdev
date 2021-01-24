@@ -1,8 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("supertest");
-const passport = require("passport");
-const passport_config = require("../../util/passportUtil");
 
 // apiErrorHandler middleware logs errors
 global.console = {
@@ -27,7 +25,7 @@ beforeEach(() => {
     create: DBresolvedReq(),
     findOne: DBresolvedReq()
   }
-  
+
   app.use((req, res, next) => {
     req.models = { User: UserMock };
     next();
@@ -56,9 +54,8 @@ describe(" POST /api/login", () => {
         password: "w"
       });
 
-    expect(res.body.errorMsg).toBe( "" );
+    expect(res.body.errorMsg).toBe("");
     expect(res.status).toBe(302);
     expect(res.body.error).toBeFalsy();
   });
-
 })
