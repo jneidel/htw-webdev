@@ -1,7 +1,3 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config()
-}
-
 const express = require("express");
 const helmet = require("helmet");
 const bodyParser = require("body-parser");
@@ -13,7 +9,6 @@ const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
 const passport_config = require("./util/passportUtil");
-const sess = passport_config.sess;
 
 (async () => { // allow for await use
   // load in environmental variables
@@ -58,12 +53,16 @@ const sess = passport_config.sess;
     req.models = {
       User
     };
-    db.sync( { alter: true } ); // check all tables & make them match their model
+    db.sync({ alter: true }); // check all tables & make them match their model
     next();
   });
 
   app.use(flash())
-  app.use(session(sess))
+  app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+  }))
 
   app.use(passport.initialize());
   app.use(passport.session());

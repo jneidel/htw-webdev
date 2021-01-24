@@ -1,12 +1,6 @@
 const LocalStrategy = require("passport-local").Strategy
 const bcrypt = require("bcrypt")
 
-const sess = {
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false
-}
-
 function initialize(passport, User) {
     const authenticateUser = async (email, password, done) => {
         let failMessage = "Authentication failed"
@@ -65,5 +59,4 @@ module.exports = {
     initialize,
     checkAuthenticated,
     checkNotAuthenticated,
-    sess
 }
