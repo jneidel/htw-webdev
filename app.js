@@ -51,7 +51,8 @@ const passport_config = require("./util/passportUtil");
 
     // initialize db tables
     req.models = {
-      User
+      User: models.User(db),
+      Todo: models.Todo(db)
     };
     db.sync({ alter: true }); // check all tables & make them match their model
     next();

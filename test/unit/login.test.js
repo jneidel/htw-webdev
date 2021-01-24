@@ -54,7 +54,6 @@ describe(" POST /api/login", () => {
       }
     ];
     
-    //new Promise( ( resolve, reject ) => resolve( expectedUser ) )
     UserMock.findOne.mockReturnValueOnce(new Promise( ( resolve, reject ) => resolve( expectedUser[0] ) ));
 
     const res = await request(app)

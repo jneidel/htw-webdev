@@ -41,6 +41,7 @@ body {
 /* left header: logo */
 #header-left {
   padding: 20px 23px;
+  margin-top: -7px; /* center the logo */
 }
 
 a#logo-link {
@@ -72,9 +73,24 @@ a#logo-link {
 #footer {
   grid-area: footer;
   width: auto;
-  background-color: rgba(61, 61, 61, 0.89);
 }
 
+#footer-hr {
+  width: 60vw;
+  height: 1px;
+  border: 0;
+  background-image: linear-gradient( to right, rgba(0, 0, 0, 0), #333, rgba(0, 0, 0, 0) );
+}
+
+#footer-link{
+  color: #1c1c1c;
+  text-decoration: none;
+}
+#footer-link:hover {
+  color: #0066ff;
+}
+
+/* link style */
 a.blue-btn {
   color: white;
   background-color: #0060f0;
@@ -85,18 +101,6 @@ a.blue-btn {
 
 a.blue-btn:hover{
   box-shadow: 0 0 5px #333;
-}
-
-/* link style */
-a.white-link {
-  color: #fff;
-  text-decoration: none;
-}
-a.white-link:hover {
-  color: #0066ff;
-}
-#footer-link{
-  margin:1rem;
 }
 
 /* positioning */
