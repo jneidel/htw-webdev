@@ -1,6 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("supertest");
+const passport = require("passport");
+const flash = require("express-flash");
+const session = require("express-session");
+const passport_config = require("../../util/passportUtil");
 
 // apiErrorHandler middleware logs errors
 global.console = {
@@ -31,6 +35,10 @@ beforeEach(() => {
     next();
   });
 
+  app.use(passport.initialize());
+  app.use(passport.session());
+  passport_config.initialize(passport);
+
   app.use("/api", require("../../routes/api"));
   app.use("/api", require("../../routes/apiErrorHandler"));
 });
@@ -45,7 +53,9 @@ describe(" POST /api/login", () => {
         password: "$2b$10$kCzJI1ZWHN0uAZ0YFBNEFemddORcYvwwREBo.biSvGTuhcsW127JK"
       }
     ];
-    UserMock.findOne = DBresolvedReq(expectedUser);
+    
+    //new Promise( ( resolve, reject ) => resolve( expectedUser ) )
+    UserMock.findOne.mockReturnValueOnce(new Promise( ( resolve, reject ) => resolve( expectedUser[0] ) ));
 
     const res = await request(app)
       .post("/api/login")
@@ -54,7 +64,7 @@ describe(" POST /api/login", () => {
         password: "w"
       });
 
-    expect(res.body.errorMsg).toBe("");
+    //expect(res.body.errorMsg).toBe("");
     expect(res.status).toBe(302);
     expect(res.body.error).toBeFalsy();
   });
