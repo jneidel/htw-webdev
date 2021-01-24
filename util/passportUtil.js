@@ -1,9 +1,5 @@
 const LocalStrategy = require("passport-local").Strategy
 const bcrypt = require("bcrypt")
-const configureDatabase = require("./database");
-const models = require("../models");
-
-let db, User;
 
 const sess = {
     secret: process.env.SESSION_SECRET,
@@ -11,10 +7,8 @@ const sess = {
     saveUninitialized: false
 }
 
-function initialize(passport) {
+function initialize(passport, User) {
     const authenticateUser = async (email, password, done) => {
-        db = await configureDatabase(process.env);
-        User = models.User(db);
         let failMessage = "Authentication failed"
         const user = await User.findOne(
             {

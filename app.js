@@ -67,7 +67,7 @@ const sess = passport_config.sess;
 
   app.use(passport.initialize());
   app.use(passport.session());
-  passport_config.initialize(passport);
+  passport_config.initialize(passport, User);
 
   // routes
   app.use("/", require("./routes"));

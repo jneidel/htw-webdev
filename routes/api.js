@@ -21,8 +21,7 @@ router.post("/register", checkNotAuthenticated, async (req, res) => {
       password: hashedPassword
     })
     res.redirect("/login")
-  } catch(e) {
-    console.log(e)
+  } catch {
     res.redirect("/register")
   }
 });
