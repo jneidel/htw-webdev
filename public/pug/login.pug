@@ -7,10 +7,11 @@ block main
     #boarder
         h1 login
         #credentials
+            p=messages.error
             form(action="api/login", method="post")
                 .textbox
-                    input(type='email', id="email", name="email" placeholder='Email')
+                    input(type='email', id="email", name="email" placeholder='Email' required)
                 .textbox
-                    input(type='password', id="password", name="password" placeholder='Password')
+                    input(type='password', id="password", name="password" placeholder='Password' required)
                 button(type="submit") sign in
                 a.black-link#spaced(href="register") sign up
