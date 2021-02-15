@@ -60,7 +60,7 @@ const App = {
     },
     removeCompleted() {
       this.todos = this.todos.filter( t => !t.done );
-      request( "/todos", "DELETE" )
+      request( "/todos", "DELETE" );
     },
   },
 };
