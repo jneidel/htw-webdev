@@ -6,7 +6,7 @@ const passport = require("passport");
 const passport_config = require("../util/passportUtil");
 const checkNotAuthenticated = passport_config.checkNotAuthenticated;
 
-router.post("/login", checkNotAuthenticated, passport.authenticate("local", {
+router.post("/login", passport.authenticate("local", {
   successRedirect: "/home",
   failureRedirect: "/login",
   failureFlash: true
