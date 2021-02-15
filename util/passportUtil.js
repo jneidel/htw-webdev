@@ -2,8 +2,8 @@ const LocalStrategy = require("passport-local").Strategy
 const bcrypt = require("bcrypt")
 
 function initialize(passport) {
-    const authenticateUser = async (req, email, password, done) => {
-        let failMessage = "Authentication failed"
+    async function authenticateUser(req, email, password, done) {
+        const failMessage = "Authentication failed"
         const user = await req.models.User.findOne(
             {
                 where: { email: email },
