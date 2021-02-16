@@ -2,8 +2,8 @@ const express = require( "express" );
 const router = express.Router();
 
 const passport_config = require( "../util/passportUtil" );
-const { checkAuthenticated } = passport_config;
-const { checkNotAuthenticated } = passport_config;
+const checkAuthenticated = passport_config.checkAuthenticated;
+const checkNotAuthenticated = passport_config.checkNotAuthenticated;
 
 router.get( "/", ( req, res ) => res.render( "landing", { title: "What to do?" } ) );
 router.get( "/login", checkNotAuthenticated, ( req, res ) => res.render( "login", { title: "login" } ) );

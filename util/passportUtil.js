@@ -54,8 +54,18 @@ function checkNotAuthenticated(req, res, next) {
     next()
 }
 
+function returnAuthentication(req, res, next){
+    if (req.isAuthenticated()){
+        res.locals.isAuthorized = true;
+    } else {
+        res.locals.isAuthorized = false;
+    }
+    next()
+}
+
 module.exports = {
     initialize,
     checkAuthenticated,
     checkNotAuthenticated,
+    returnAuthentication
 }
