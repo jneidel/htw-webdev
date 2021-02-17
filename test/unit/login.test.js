@@ -61,14 +61,16 @@ describe(" POST /api/login", () => {
       password: "$2b$10$kCzJI1ZWHN0uAZ0YFBNEFemddORcYvwwREBo.biSvGTuhcsW127JK"
     };
 
+    const validPassword = "w"
+
     UserMock.findOne.mockReturnValueOnce(new Promise((resolve, reject) => resolve(expectedUser)));
 
     const res = await request(app)
       .post("/api/login")
       .send({
-        email: "leon.enzenberger@protonmail.com",
+        email: expectedUser.email,
         //right password
-        password: "w"
+        password: validPassword
       });
 
     expect(res.text).toBe("Found. Redirecting to /home");
@@ -85,14 +87,16 @@ describe(" POST /api/login", () => {
       password: "$2b$10$C6IpUs.u/HdZlONqoJ5m3u8X5MAxhm8UJ7qeTXVd2uY54V8b80CRq"
     };
 
+    const invalidPassword = "wrongPassword"
+
     UserMock.findOne.mockReturnValueOnce(new Promise((resolve, reject) => resolve(expectedUser)));
 
     const res = await request(app)
       .post("/api/login")
       .send({
-        email: "cro@cro",
+        email: expectedUser.email,
         //wrong
-        password: "blub"
+        password: invalidPassword
       });
 
     expect(res.text).toBe("Found. Redirecting to /login");
