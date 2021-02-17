@@ -103,6 +103,16 @@ a.blue-btn:hover{
   box-shadow: 0 0 5px #333;
 }
 
+.blue-btn{
+  color: white;
+  background-color: #0060f0;
+  padding: .7rem 2rem;
+  border-radius: 2rem;
+  border: none;
+  margin-top: 1rem;
+  font-size: 12pt;
+}
+
 /* positioning */
 .horizontal-center {
   display: flex;
