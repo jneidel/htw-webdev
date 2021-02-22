@@ -2,11 +2,11 @@ const LocalStrategy = require("passport-local").Strategy
 const bcrypt = require("bcrypt")
 
 function initialize(passport) {
-    async function authenticateUser(req, email, password, done) {
+    async function authenticateUser(req, username, password, done) {
         const failMessage = "Authentication failed"
         const user = await req.models.User.findOne(
             {
-                where: { email: email },
+                where: { username: username },
                 raw: true
             }
         );
@@ -25,7 +25,7 @@ function initialize(passport) {
         }
     }
     passport.use(new LocalStrategy({
-        usernameField: "email",
+        usernameField: "username",
         passReqToCallback: true
     }, authenticateUser))
     passport.serializeUser((user, done) => done(null, user.id))

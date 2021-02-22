@@ -16,8 +16,7 @@ router.post("/register", checkNotAuthenticated, async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
     req.models.User.create({
-      username: req.body.name,
-      email: req.body.email,
+      username: req.body.username,
       password: hashedPassword
     })
     res.redirect("/login")

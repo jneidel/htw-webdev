@@ -56,8 +56,7 @@ describe(" POST /api/login", () => {
     const expectedUser =
     {
       id: "f8c79056-0b85-43ad-b740-6642d9ee5b3c",
-      name: "Leon",
-      email: "leon.enzenberger@protonmail.com",
+      username: "Leon",
       password: "$2b$10$kCzJI1ZWHN0uAZ0YFBNEFemddORcYvwwREBo.biSvGTuhcsW127JK"
     };
 
@@ -68,7 +67,7 @@ describe(" POST /api/login", () => {
     const res = await request(app)
       .post("/api/login")
       .send({
-        email: expectedUser.email,
+        username: expectedUser.username,
         //right password
         password: validPassword
       });
@@ -83,7 +82,6 @@ describe(" POST /api/login", () => {
     {
       id: "5e67bf8d-353b-4a1e-8eac-55ebb2b346ea",
       name: "cro",
-      email: "cro@cro",
       password: "$2b$10$C6IpUs.u/HdZlONqoJ5m3u8X5MAxhm8UJ7qeTXVd2uY54V8b80CRq"
     };
 
@@ -94,8 +92,7 @@ describe(" POST /api/login", () => {
     const res = await request(app)
       .post("/api/login")
       .send({
-        email: expectedUser.email,
-        //wrong
+        username: expectedUser.username,
         password: invalidPassword
       });
 
