@@ -20,10 +20,10 @@ beforeEach( () => {
 
   TodoMock = {
     findAll: DBresolvedReq(),
-    update: DBresolvedReq(),
+    update : DBresolvedReq(),
     destroy: DBresolvedReq(),
-    create: DBresolvedReq(),
-  }
+    create : DBresolvedReq(),
+  };
   app.use( ( req, res, next ) => {
     req.models = { Todo: TodoMock };
     next();
@@ -36,18 +36,18 @@ beforeEach( () => {
 describe( "GET /api/todos", () => {
   test( "success", async () => {
     const expectedTodos = [
-      { id: "123", text: "my todo", createdAt: "now" }
+      { id: "123", text: "my todo", createdAt: "now" },
     ];
     TodoMock.findAll = DBresolvedReq( expectedTodos );
 
     const res = await request( app )
-      .get( "/api/todos")
+      .get( "/api/todos" );
 
     expect( res.status ).toBe( 200 );
     expect( res.body.error ).toBeFalsy();
     expect( res.body.todos ).toEqual( expectedTodos );
   } );
-});
+} );
 
 describe( "POST /api/todo", () => {
   test( "success", async () => {
@@ -55,7 +55,7 @@ describe( "POST /api/todo", () => {
     TodoMock.create = DBresolvedReq( { id: expectedUUID } );
 
     const res = await request( app )
-      .post( "/api/todo")
+      .post( "/api/todo" )
       .send( { text: "a todo" } );
 
     expect( res.status ).toBe( 200 );
@@ -65,7 +65,7 @@ describe( "POST /api/todo", () => {
 
   test( "empty todo text - send none", async () => {
     const res = await request( app )
-      .post( "/api/todo")
+      .post( "/api/todo" );
 
     expect( res.status ).toBe( 400 );
     expect( res.body.error ).toBeTruthy();
@@ -73,7 +73,7 @@ describe( "POST /api/todo", () => {
   } );
   test( "empty todo text - send empty", async () => {
     const res = await request( app )
-      .post( "/api/todo")
+      .post( "/api/todo" )
       .send( { text: "" } );
 
     expect( res.status ).toBe( 400 );
@@ -150,14 +150,14 @@ describe( "PUT /api/todo", () => {
     expect( res.body.error ).toBeTruthy();
     expect( res.body.errorMsg ).toBe( "nothing to update" );
   } );
-});
+} );
 
 describe( "DELETE /api/todo", () => {
   test( "success", async () => {
     const data = { id: "123" };
 
     const res = await request( app )
-      .delete( "/api/todo")
+      .delete( "/api/todo" )
       .send( data );
 
     expect( res.status ).toBe( 200 );
@@ -167,7 +167,7 @@ describe( "DELETE /api/todo", () => {
     const data = { id: "" };
 
     const res = await request( app )
-      .delete( "/api/todo")
+      .delete( "/api/todo" )
       .send( data );
 
     expect( res.status ).toBe( 400 );
