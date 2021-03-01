@@ -2,8 +2,7 @@ const express = require( "express" );
 const router = express.Router();
 
 const passport_config = require( "../util/passportUtil" );
-const { checkAuthenticated } = passport_config;
-const { checkNotAuthenticated } = passport_config;
+const { checkAuthenticated, checkNotAuthenticated } = passport_config;
 
 router.use( passport_config.returnAuthentication );
 
