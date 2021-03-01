@@ -15,4 +15,4 @@ module.exports = async function configureDatabase( env ) {
   } );
 
   return sequelize;
-}
+};

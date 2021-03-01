@@ -1,22 +1,62 @@
 const express = require( "express" );
 const router = express.Router();
+const bcrypt = require( "bcrypt" );
+const passport = require( "passport" );
+
+const passport_config = require( "../util/passportUtil" );
+const { checkNotAuthenticated } = passport_config;
+
+router.post( "/login", passport.authenticate( "local", {
+  successRedirect: "/home",
+  failureRedirect: "/login",
+  failureFlash   : true,
+} ) );
+
+router.post( "/register", checkNotAuthenticated, async ( req, res ) => {
+  try {
+    const user = await req.models.User.findOne(
+      {
+        where: { username: req.body.username },
+        raw  : true,
+      }
+    );
+    if ( user == null ) {
+      const hashedPassword = await bcrypt.hash( req.body.password, 10 );
+      req.models.User.create( {
+        username: req.body.username,
+        password: hashedPassword,
+      } );
+      res.redirect( "/login" );
+    } else {
+      req.flash( "error", "Username already taken!" );
+      res.redirect( "/register" );
+    }
+  } catch {
+    res.redirect( "/register" );
+  }
+} );
+
+router.post( "/logout", ( req, res ) => {
+  req.logOut();
+  res.redirect( "/login" );
+} );
 
 // todo crud
 router.route( "/todos" )
   .get( ( req, res, next ) => {
-  req.models.Todo.findAll( {
-    attributes: [ "id", "text", "createdAt", "done" ],
-    order     : [ ["createdAt", "DESC" ] ],
-  } )
-    .then( todos => res.json( { error: false, todos } ) )
-    .catch( err => next( err ) );
+    req.models.Todo.findAll( {
+      attributes: [ "id", "text", "createdAt", "done" ],
+      order     : [ [ "createdAt", "DESC" ] ],
+    } )
+      .then( todos => res.json( { error: false, todos } ) )
+      .catch( err => next( err ) );
   } )
   .delete( ( req, res, next ) => {
     // delete all done todos
     req.models.Todo.destroy( { where: { done: true } } )
       .then( () => res.json( { error: false } ) )
       .catch( err => next( err ) );
-  } )
+  } );
 
 router.route( "/todo" )
   .post( ( req, res, next ) => {

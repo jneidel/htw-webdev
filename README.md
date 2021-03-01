@@ -44,10 +44,6 @@ Start the database:
 sudo systemctl start mysql
 ```
 
-## Attribution
-
-**Icons**
-- [Tick mark](https://www.flaticon.com/de/kostenloses-icon/tick_447147)
 
 ## ER Diagram
 

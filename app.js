@@ -5,6 +5,10 @@ const logger = require( "./util/logger" );
 const errorHandlers = require( "./util/errorHandlers" );
 const configureDatabase = require( "./util/database" );
 const models = require( "./models" );
+const passport = require( "passport" );
+const flash = require( "express-flash" );
+const session = require( "express-session" );
+const passport_config = require( "./util/passportUtil" );
 
 ( async () => { // allow for await use
   // load in environmental variables
@@ -46,11 +50,24 @@ const models = require( "./models" );
 
     // initialize db tables
     req.models = {
+      User: models.User( db ),
       Todo: models.Todo( db ),
     };
-    // db.sync( { alter: true } ); // check all tables & make them match their model
+    db.sync( { alter: true } ); // check all tables & make them match their model
     next();
   } );
+
+  app.use( flash() );
+  app.use( session( {
+    secret           : process.env.SESSION_SECRET,
+    resave           : false,
+    saveUninitialized: false,
+  } ) );
+
+  app.use( passport.initialize() );
+  app.use( passport.session() );
+  passport_config.initialize( passport );
+  //app.use(passport_config.returnAuthentication);
 
   // routes
   app.use( "/", require( "./routes" ) );
@@ -71,4 +88,4 @@ const models = require( "./models" );
   app.listen( port, () => {
     console.log( `Server running on: http://localhost:${port}.` ); // eslint-disable-line no-console
   } );
-} )()
+} )();

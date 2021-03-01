@@ -1,0 +1,7 @@
+extends layout
+
+block main
+    h Welcome Home 
+    h=name
+    form(action="api/logout", method="POST")
+        button(type="submit") log out

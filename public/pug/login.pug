@@ -1,0 +1,17 @@
+extends layout
+
+block styles
+    link(rel="stylesheet" type="text/css" href="../css/login.css")
+
+block main
+    #boarder
+        h1 login
+        #credentials
+            p=messages.error
+            form(action="api/login", method="post")
+                .textbox
+                    input(type="text", id="username", name="username" placeholder="Username" required)
+                .textbox
+                    input(type="password", id="password", name="password" placeholder="Password" required)
+                button.blue-btn(type="submit") sign in
+                a.black-link#spaced(href="register") sign up

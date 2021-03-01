@@ -1,4 +1,4 @@
- body {
+body {
   width: 100vw;
   height: 100vh;
   margin: 0;
@@ -7,6 +7,7 @@
     url("/assets/img/grid-texture.jpg");
   background-repeat: repeat, repeat;
   overflow: hidden;
+  background-position: center;
 }
 
 .container{
@@ -35,4 +36,8 @@
   height: auto;
   margin-top: -100%;
   margin-left: -120%;
+}
+
+input {
+  display: block;
 }
