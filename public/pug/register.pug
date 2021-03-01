@@ -10,8 +10,8 @@ block main
             p=messages.error
             form(action="api/register", method="post")
                 .textbox
-                    input(type='username', id="username", name="username" placeholder='Username' required)
+                    input(type="username", id="username", name="username" placeholder="Username" required)
                 .textbox
-                    input(type='password', id="password", name="password" placeholder='Password' required)
+                    input(type="password", id="password", name="password" placeholder="Password" required)
                 button.blue-btn(type="submit") register
                 a.black-link#spaced(href="login") sign in
