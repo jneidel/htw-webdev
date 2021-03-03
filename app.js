@@ -52,7 +52,13 @@ const passport_config = require( "./util/passportUtil" );
     req.models = {
       User: models.User( db ),
       Todo: models.Todo( db ),
+      List: models.List( db ),
     };
+
+    // foreign keys, work on initalized models
+    // docs: https://sequelize.org/v5/manual/associations.html#foreign-keys
+    req.models.List.hasMany( Todo ); // add listId to todos
+
     db.sync( { alter: true } ); // check all tables & make them match their model
     next();
   } );
