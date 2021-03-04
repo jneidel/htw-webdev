@@ -15,6 +15,10 @@ html
       #header-left
         a#logo-link( href="/" )
           p.logo What to do?
+      #header-center.vertical-center
+        if isAuthorized
+          a.username(href="/usermanagement")
+            p=username.charAt(0).toUpperCase()
       #header-right.vertical-center
         if isAuthorized
           a.blue-btn( href="/app" )
