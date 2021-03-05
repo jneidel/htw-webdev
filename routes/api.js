@@ -97,4 +97,49 @@ router.route( "/todo" )
       .catch( err => next( err ) );
   } );
 
+// lists crud
+router.route( "/list" )
+  .post( ( req, res, next ) => {
+    const { name, color } = req.body;
+    if ( !name )
+      return next( new Error( "400: no list name" ) );
+    if ( !color )
+      return next( new Error( "400: no list color" ) );
+    if ( color.length !== 7 || color[0] !== "#" )
+      return next( new Error( "400: invalid hex color (#rrggbb)" ) );
+
+    req.models.List.create( { name, color } )
+      .then( todo => res.json( { error: false } ) )
+      .catch( err => next( err ) );
+  } )
+  .put( ( req, res, next ) => {
+    const { name, newName, color } = req.body;
+    if ( !name )
+      return next( new Error( "400: missing list name" ) );
+    if ( color )
+      if ( color.length !== 7 || color[0] !== "#" )
+        return next( new Error( "400: invalid hex color (#rrggbb)" ) );
+    if ( newName === undefined && color === undefined )
+      return next( new Error( "400: nothing to update" ) );
+
+    const updateObj = {};
+    if ( color !== undefined )
+      updateObj.color = color;
+    if ( newName !== undefined )
+      updateObj.name = newName;
+
+    req.models.List.update( updateObj, { where: { name } } )
+      .then( () => res.json( { error: false } ) )
+      .catch( err => next( err ) );
+  } )
+  .delete( ( req, res, next ) => {
+    const { name } = req.body;
+    if ( !name )
+      return next( new Error( "400: missing list name" ) );
+
+    req.models.List.destroy( { where: { name } } )
+      .then( () => res.json( { error: false } ) )
+      .catch( err => next( err ) );
+  } );
+
 module.exports = router;
