@@ -3,8 +3,8 @@ const { DataTypes } = require( "sequelize" );
 module.exports = function List( db ) {
   return db.define( "List", {
     id: {
-      type        : DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
+    name: {
+      type        : DataTypes.STRING,
       primaryKey  : true,
       allowNull   : false,
     },
@@ -12,7 +12,8 @@ module.exports = function List( db ) {
       type     : DataTypes.STRING,
       allowNull: false,
       // random color gets rolled on client
-    }, {
+    },
+  }, {
     tableName: "lists",
   } );
 };
