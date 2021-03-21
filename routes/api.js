@@ -20,7 +20,6 @@ router.post("/user/password", checkAuthenticated, async (req, res, next) => {
     return next(new Error("400: empty user password"));
   }
 
-  console.log(res.locals.userid, password);
   const hashedPassword = await bcrypt.hash(password, 10);
   const updateObj = { password: hashedPassword }
 
