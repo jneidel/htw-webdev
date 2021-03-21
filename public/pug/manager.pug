@@ -15,6 +15,9 @@ block main
                 .textbox
                     input(type="password", id="password", name="password" placeholder="Password" required)
                 button(type="submit") change password
-            form(action="api/logout", method="POST")
+            form(action="api/user/delete", method="post")
+                .textbox
+                    input(type="text", id="username", name="username", placeholder="Confirm with username" required)
+                button(type="submit") delete user
+            form(action="api/logout", method="post")
                 button(type="submit") log out
-    

@@ -37,14 +37,30 @@ router.post("/user/password", checkAuthenticated, async (req, res, next) => {
 router.post("/user/username", checkAuthenticated, async (req, res, next) => {
   const username = req.body.username;
   if (!username || username === "") {
-    return next(new Error("400: empty user password"));
+    return next(new Error("400: empty username"));
   }
   req.models.User.update({ username: username }, { where: { id: res.locals.userid } })
     .then(() => res.json({ error: false }))
     .catch(err => next(err));
-  req.flash("error", "Please sign in again")
+  req.flash("error", "Please sign in again");
   req.logOut();
-  res.redirect("../../login")
+  res.redirect("../../login");
+});
+
+router.post("/user/delete", checkAuthenticated, async (req, res, next) =>{
+  const username = req.body.username;
+  if (!username || username === "") {
+    return next(new Error("400: empty username"));
+  }
+  if (username === res.locals.username){
+    req.models.User.destroy({where: {username: username}})
+    req.flash("error", "User deleted sucessfully");
+    req.logOut();
+    res.redirect("../../login");
+  } else {
+    req.flash("error", "Name doesn't match user");
+    res.redirect("/manager");
+  }
 });
 
 router.post("/register", checkNotAuthenticated, async (req, res) => {
