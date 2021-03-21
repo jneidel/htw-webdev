@@ -57,6 +57,7 @@ function checkNotAuthenticated( req, res, next ) {
 function returnAuthentication( req, res, next ) {
   if ( req.isAuthenticated() ){
     res.locals.username = req.user.username;
+    res.locals.userid = req.user.id;
     res.locals.isAuthorized = true;
   }
   else

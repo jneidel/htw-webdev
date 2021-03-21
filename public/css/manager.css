@@ -1,0 +1,10 @@
+#header {
+    background: #ffcb5c;
+}
+
+#main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 30px 0;
+}

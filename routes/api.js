@@ -4,28 +4,35 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 
 const passport_config = require("../util/passportUtil");
-const { checkNotAuthenticated, checkAuthenticated } = passport_config;
+const { checkNotAuthenticated, checkAuthenticated, returnAuthentication } = passport_config;
+
+router.use(returnAuthentication);
 
 router.post("/login", passport.authenticate("local", {
-  successRedirect: "/home",
+  successRedirect: "/app",
   failureRedirect: "/login",
   failureFlash: true,
 }));
 
-router.put("/user/password", checkAuthenticated, async (req, res) => {
-  const { password } = req.body
+router.post("/user/password", checkAuthenticated, async (req, res, next) => {
+  const password = req.body.password
   if (!password || password === "") {
     return next(new Error("400: empty user password"));
   }
+
+  console.log(res.locals.userid, password);
   const hashedPassword = await bcrypt.hash(password, 10);
   const updateObj = { password: hashedPassword }
 
-  req.models.User.update(updateObj, { where: { id } })
+  req.models.User.update(updateObj, 
+    {
+      where: { id: res.locals.userid } 
+    })
     .then(() => res.json({ error: false }))
     .catch(err => next(err));
   req.flash("error", "Please sign in again")
   req.logOut();
-  req.redirect("login")
+  res.redirect("../../login")
 });
 
 router.post("/register", checkNotAuthenticated, async (req, res) => {
