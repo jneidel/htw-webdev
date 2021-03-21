@@ -7,7 +7,7 @@ block main
     h1 User-Management
         #credentials
             p=messages.error
-            form(action="api/user/name", method="post")
+            form(action="api/user/username", method="post")
                 .textbox
                     input(type="text", id="username", name="username" placeholder="Username" required)
                 button(type="submit") change name

@@ -23,10 +23,23 @@ router.post("/user/password", checkAuthenticated, async (req, res, next) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   const updateObj = { password: hashedPassword }
 
-  req.models.User.update(updateObj, 
+  req.models.User.update(updateObj,
     {
-      where: { id: res.locals.userid } 
+      where: { id: res.locals.userid }
     })
+    .then(() => res.json({ error: false }))
+    .catch(err => next(err));
+  req.flash("error", "Please sign in again")
+  req.logOut();
+  res.redirect("../../login")
+});
+
+router.post("/user/username", checkAuthenticated, async (req, res, next) => {
+  const username = req.body.username;
+  if (!username || username === "") {
+    return next(new Error("400: empty user password"));
+  }
+  req.models.User.update({ username: username }, { where: { id: res.locals.userid } })
     .then(() => res.json({ error: false }))
     .catch(err => next(err));
   req.flash("error", "Please sign in again")
