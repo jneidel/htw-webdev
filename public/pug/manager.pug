@@ -4,20 +4,18 @@ block styles
     link(rel="stylesheet" type="text/css" href="../css/manager.css")
 
 block main
-    h1 User-Management
-        #credentials
-            p=messages.error
-            form(action="api/user/username", method="post")
-                .textbox
-                    input(type="text", id="username", name="username" placeholder="Username" required)
-                button(type="submit") change name
-            form(action="api/user/password", method="post")
-                .textbox
-                    input(type="password", id="password", name="password" placeholder="Password" required)
-                button(type="submit") change password
-            form(action="api/user/delete", method="post")
-                .textbox
-                    input(type="text", id="username", name="username", placeholder="Confirm with username" required)
-                button(type="submit") delete user
+    #credentials
+        p=messages.error
+        #unboxed
+            h#username=username
             form(action="api/logout", method="post")
-                button(type="submit") log out
+                button.orange-btn(type="submit") log out
+        form#boxed(action="api/user/username", method="post")
+            input(type="text", id="username", name="username" placeholder="Username" required)
+            button.grey-btn(type="submit") change name
+        form#boxed(action="api/user/password", method="post")
+            input(type="password", id="password", name="password" placeholder="Password" required)
+            button.grey-btn(type="submit") change password
+        form#boxed(action="api/user/delete", method="post")
+            input(type="text", id="username", name="username", placeholder="Confirm with username" required)
+            button.grey-btn(type="submit") delete user
