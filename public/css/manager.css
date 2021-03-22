@@ -6,7 +6,7 @@ input{
     font-size: 30px;
     outline: none;
     border: none;
-    background: transparent
+    background: transparent;
 }
 
 #main {
@@ -35,6 +35,10 @@ input{
     align-items: center;
     border: 1px solid #d4d4d4;
     padding: 20px 15px;
+}
+
+input::placeholder{
+    color: #d4d4d4;
 }
 
 .grey-btn{
