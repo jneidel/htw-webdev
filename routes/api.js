@@ -2,11 +2,13 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const passport = require("passport");
+const methodOverride = require("method-override");
 
 const passport_config = require("../util/passportUtil");
 const { checkNotAuthenticated, checkAuthenticated, returnAuthentication } = passport_config;
 
 router.use(returnAuthentication);
+router.use(methodOverride("_method"));
 
 router.post("/login", passport.authenticate("local", {
   successRedirect: "/app",
@@ -14,7 +16,7 @@ router.post("/login", passport.authenticate("local", {
   failureFlash: true,
 }));
 
-router.post("/user/password", checkAuthenticated, async (req, res, next) => {
+router.put("/user/password", checkAuthenticated, async (req, res, next) => {
   const password = req.body.password
   if (!password || password === "") {
     return next(new Error("400: empty user password"));
@@ -34,7 +36,7 @@ router.post("/user/password", checkAuthenticated, async (req, res, next) => {
   res.redirect("../../login")
 });
 
-router.post("/user/username", checkAuthenticated, async (req, res, next) => {
+router.put("/user/username", checkAuthenticated, async (req, res, next) => {
   const username = req.body.username;
   if (!username || username === "") {
     return next(new Error("400: empty username"));
@@ -47,7 +49,7 @@ router.post("/user/username", checkAuthenticated, async (req, res, next) => {
   res.redirect("../../login");
 });
 
-router.post("/user/delete", checkAuthenticated, async (req, res, next) =>{
+router.delete("/user", checkAuthenticated, async (req, res, next) =>{
   const username = req.body.username;
   if (!username || username === "") {
     return next(new Error("400: empty username"));
