@@ -60,13 +60,21 @@ router.route( "/todos" )
 
 router.route( "/todo" )
   .post( ( req, res, next ) => {
-    const { text } = req.body;
+    const { text, listId } = req.body;
     if ( !text )
       return next( new Error( "400: empty todo text" ) );
+    if ( !listId )
+      return next( new Error( "400: no listId (reference to lists)" ) );
 
-    req.models.Todo.create( { text } )
+    req.models.Todo.create( { text, ListId: listId } )
       .then( todo => res.json( { error: false, id: todo.id } ) )
-      .catch( err => next( err ) );
+      .catch( err => {
+        if ( err.message.match( "foreign key constraint fails" ) ) {
+          return next( new Error( "400: listId is invalid (not a foreign key)" ) );
+        }
+
+        return next( err )
+      } );
   } )
   .put( ( req, res, next ) => {
     const { id, text, done } = req.body;
@@ -98,6 +106,26 @@ router.route( "/todo" )
   } );
 
 // lists crud
+router.get( "/lists", async ( req, res, next ) => {
+    let lists = await req.models.List.findAll( {
+      attributes: [ "id", "name", "color", "createdAt" ],
+      order     : [ [ "createdAt", "ASC" ] ],
+    } ).catch( err => next( err ) );
+
+    if ( lists.length === 0 ) {
+      lists[0] = await req.models.List.create( { name: "default", color: "#000000" } ) // TODO: add UserId: user
+        .catch( err => next( err ) );
+    }
+
+    req.models.Todo.findAll( {
+      where : { ListId: lists[0].id },
+      attributes: [ "id", "text", "createdAt", "done" ],
+      order     : [ [ "createdAt", "DESC" ] ],
+    } )
+      .then( todos => res.json( { error: false, todos, lists } ) )
+      .catch( err => next( err ) )
+  } );
+
 router.route( "/list" )
   .post( ( req, res, next ) => {
     const { name, color } = req.body;
@@ -109,7 +137,7 @@ router.route( "/list" )
       return next( new Error( "400: invalid hex color (#rrggbb)" ) );
 
     req.models.List.create( { name, color } )
-      .then( todo => res.json( { error: false } ) )
+      .then( list => res.json( { error: false, id: list.id } ) )
       .catch( err => next( err ) );
   } )
   .put( ( req, res, next ) => {

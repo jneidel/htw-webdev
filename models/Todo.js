@@ -1,6 +1,6 @@
 const { DataTypes } = require( "sequelize" );
 
-module.exports = function Todo( db ) {
+module.exports = function Todo( db, List ) {
   return db.define( "Todo", {
     id: {
       type        : DataTypes.UUID,

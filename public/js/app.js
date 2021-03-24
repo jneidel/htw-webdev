@@ -1,5 +1,5 @@
 function request( route, method, data = {} ) { // non get
-  return fetch( `/api/${  route}`, { method, body: JSON.stringify( data ), headers: { "Content-Type": "application/json" } } )
+  return fetch( `/api/${route}`, { method, body: JSON.stringify( data ), headers: { "Content-Type": "application/json" } } )
     .catch( err => console.log( err ) );
 }
 
@@ -8,22 +8,29 @@ const App = {
     return {
       newTodo: "",
       todos  : [],
+      lists  : [],
+      currentList: -1, // index on lists
     };
   },
   mounted() {
-    fetch( "/api/todos" )
+    fetch( "/api/lists" )
       .then( res => res.json() )
       .then( data => {
         if ( data.error )
           throw new Error( data.errorMsg );
 
         this.todos = data.todos;
+        this.lists = data.lists;
+        this.currentList = 0;
       } );
   },
   computed: {
     remaining() {
       return this.todos.filter( t => !t.done ).length;
     },
+    list() { // shorthand to active list
+      return this.lists[this.currentList];
+    }
   },
   methods: {
     pluralize( word, count ) {
@@ -34,7 +41,7 @@ const App = {
       if ( !value )
         return;
 
-      request( "/todo", "POST", { text: value } )
+      request( "/todo", "POST", { text: value, listId: this.list.id } )
         .then( res => res.json() )
         .then( ( { id } ) => {
           this.todos.unshift( { id, text: value, done: false } );
@@ -53,7 +60,7 @@ const App = {
       if ( !todo.text )
         this.removeTodo( todo );
 
-      request( "/todo", "PUT", { id: todo.id, text: todo.text } );
+      request( "/todo", "PUT", { id: todo.id, text: todo.text, listId: todo.listId } );
     },
     toggleCompleted( todo ) {
       request( "/todo", "PUT", { id: todo.id, done: !todo.done } ); // done inverted bc it has not updated yet via v-model
