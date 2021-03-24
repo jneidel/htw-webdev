@@ -120,13 +120,12 @@ const App = {
       this.updateListsColoredBorder();
       request( "/list", "PUT", list );
     },
-    async deleteList( list ) {
+    deleteList( list ) {
       if ( list.id === this.list.id )
         this.currentList = 0;
 
-      await request( "/list", "DELETE", { id: list.id } )
+      request( "/list", "DELETE", { id: list.id } )
         .then( r => this.lists.splice( this.lists.indexOf( list ), 1 ) );
-      // .catch( err => console.log( err ) )
     },
   },
 };

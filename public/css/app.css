@@ -16,7 +16,7 @@ body {
   padding: 30px 0;
 }
 
-/* lists boxes */
+/* lists */
 #lists-list {
   display: flex;
   justify-content: center;
@@ -30,6 +30,7 @@ body {
   font-size: 12px;
   width: 70px;
 }
+
 input[type="color"] {
     border-radius: 100%;
     height: 14px;
@@ -45,11 +46,12 @@ input[type="color"]::-webkit-color-swatch {
     border: none;
     border-radius: 100%;
 }
+
 #plus {
   visibility: hidden;
 }
 
-/* 1st box */
+/* new todo box */
 .new-todo {
   margin: 0 0 -17px 0;
   border: 1px solid #d4d4d4;
@@ -59,7 +61,7 @@ input[type="color"]::-webkit-color-swatch {
   color: #d4d4d4;
 }
 
-/* 2nd box */
+/* list of todos box */
 #todo-list {
   display: flex;
   flex-direction: column;
@@ -104,7 +106,7 @@ button.destroy {
   text-decoration: line-through;
 }
 
-/* 3nd box */
+/* todo count box */
 #todo-footer {
   display: flex;
   flex-direction: row;

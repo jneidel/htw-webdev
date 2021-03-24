@@ -80,7 +80,6 @@ router.route( "/todo" )
         if ( err.message.match( "foreign key constraint fails" ) )
           return next( new Error( "400: listId is invalid (not a foreign key)" ) );
 
-
         return next( err );
       } );
   } )
@@ -121,7 +120,7 @@ router.get( "/lists", async ( req, res, next ) => {
   } ).catch( err => next( err ) );
 
   if ( lists.length === 0 ) {
-    req.models.List.create( { name: "default", color: "#000000" } ) // TODO: add UserId: user
+    req.models.List.create( { name: "default", color: randomColor() } ) // TODO: add UserId: user
       .then( list => res.json( { error: false, todos: [], lists: [ list ] } ) )
       .catch( err => next( err ) );
   } else { // no list = no todo, so no need to query
@@ -137,14 +136,6 @@ router.get( "/lists", async ( req, res, next ) => {
 
 router.route( "/list" )
   .post( ( req, res, next ) => {
-    // const { name, color } = req.body;
-    // if ( !name )
-    //   return next( new Error( "400: no list name" ) );
-    // if ( !color )
-    //   return next( new Error( "400: no list color" ) );
-    // if ( color.length !== 7 || color[0] !== "#" )
-    //   return next( new Error( "400: invalid hex color (#rrggbb)" ) );
-
     req.models.List.create( { name: "new list", color: randomColor() } )
       .then( list => res.json( { error: false, id: list.id, name: list.name, color: list.color } ) )
       .catch( err => next( err ) );
