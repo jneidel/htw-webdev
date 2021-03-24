@@ -60,7 +60,7 @@ const App = {
       if ( !todo.text )
         this.removeTodo( todo );
 
-      request( "/todo", "PUT", { id: todo.id, text: todo.text, listId: todo.listId } );
+      request( "/todo", "PUT", { id: todo.id, text: todo.text, listId: this.list.id } );
     },
     toggleCompleted( todo ) {
       request( "/todo", "PUT", { id: todo.id, done: !todo.done } ); // done inverted bc it has not updated yet via v-model

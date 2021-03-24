@@ -44,7 +44,14 @@ router.post( "/logout", ( req, res ) => {
 // todo crud
 router.route( "/todos" )
   .get( ( req, res, next ) => {
+    const { listId } = req.query;
+
+    if ( !listId )
+      return next( new Error( "400: missing listId" ) );
+
+
     req.models.Todo.findAll( {
+      where     : { ListId: listId },
       attributes: [ "id", "text", "createdAt", "done" ],
       order     : [ [ "createdAt", "DESC" ] ],
     } )
@@ -69,11 +76,11 @@ router.route( "/todo" )
     req.models.Todo.create( { text, ListId: listId } )
       .then( todo => res.json( { error: false, id: todo.id } ) )
       .catch( err => {
-        if ( err.message.match( "foreign key constraint fails" ) ) {
+        if ( err.message.match( "foreign key constraint fails" ) )
           return next( new Error( "400: listId is invalid (not a foreign key)" ) );
-        }
 
-        return next( err )
+
+        return next( err );
       } );
   } )
   .put( ( req, res, next ) => {
@@ -107,24 +114,24 @@ router.route( "/todo" )
 
 // lists crud
 router.get( "/lists", async ( req, res, next ) => {
-    let lists = await req.models.List.findAll( {
-      attributes: [ "id", "name", "color", "createdAt" ],
-      order     : [ [ "createdAt", "ASC" ] ],
-    } ).catch( err => next( err ) );
+  const lists = await req.models.List.findAll( {
+    attributes: [ "id", "name", "color", "createdAt" ],
+    order     : [ [ "createdAt", "ASC" ] ],
+  } ).catch( err => next( err ) );
 
-    if ( lists.length === 0 ) {
-      lists[0] = await req.models.List.create( { name: "default", color: "#000000" } ) // TODO: add UserId: user
-        .catch( err => next( err ) );
-    }
+  if ( lists.length === 0 ) {
+    lists[0] = await req.models.List.create( { name: "default", color: "#000000" } ) // TODO: add UserId: user
+      .catch( err => next( err ) );
+  }
 
-    req.models.Todo.findAll( {
-      where : { ListId: lists[0].id },
-      attributes: [ "id", "text", "createdAt", "done" ],
-      order     : [ [ "createdAt", "DESC" ] ],
-    } )
-      .then( todos => res.json( { error: false, todos, lists } ) )
-      .catch( err => next( err ) )
-  } );
+  req.models.Todo.findAll( {
+    where     : { ListId: lists[0].id },
+    attributes: [ "id", "text", "createdAt", "done" ],
+    order     : [ [ "createdAt", "DESC" ] ],
+  } )
+    .then( todos => res.json( { error: false, todos, lists } ) )
+    .catch( err => next( err ) );
+} );
 
 router.route( "/list" )
   .post( ( req, res, next ) => {
@@ -144,9 +151,10 @@ router.route( "/list" )
     const { name, newName, color } = req.body;
     if ( !name )
       return next( new Error( "400: missing list name" ) );
-    if ( color )
+    if ( color ) {
       if ( color.length !== 7 || color[0] !== "#" )
         return next( new Error( "400: invalid hex color (#rrggbb)" ) );
+    }
     if ( newName === undefined && color === undefined )
       return next( new Error( "400: nothing to update" ) );
 
