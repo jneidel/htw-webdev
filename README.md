@@ -44,7 +44,6 @@ Start the database:
 sudo systemctl start mysql
 ```
 
-
 ## ER Diagram
 
 edit on [draw.io](https://app.diagrams.net/#Hjneidel%2Fhtw-webdev-todo%2Fer-diagramm%2Fhtw-wd-todo.drawio)
@@ -121,3 +120,10 @@ Req:
   "id": "uuid"
 }
 ```
+
+## Attribution
+
+**Icons**
+
+- [Plus](https://www.flaticon.com/free-icon/plus_1828925)
+- [Paint Brush](https://www.flaticon.com/free-icon/paint-brush_587377)

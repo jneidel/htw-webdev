@@ -22,6 +22,7 @@ const App = {
         this.todos = data.todos;
         this.lists = data.lists;
         this.currentList = 0;
+        this.updateListsColoredBorder()
       } );
   },
   computed: {
@@ -68,6 +69,25 @@ const App = {
     removeCompleted() {
       this.todos = this.todos.filter( t => !t.done );
       request( "/todos", "DELETE" );
+    },
+    updateListsColoredBorder() {
+      setTimeout( () => {
+        [...document.querySelector( "#lists-list" ).children].forEach( ( list, index ) => {
+          if ( index === this.currentList ) {
+            list.style.border = `1px solid ${this.list.color}`;
+            // this.toggleEditListMode()
+          }
+        } );
+      }, 10 ); // w/o wait vue hasn't generated the spans yet
+    },
+    toggleEditListMode() {
+      [...document.querySelector( "#lists-list" ).children].forEach( list =>
+        [...list.children].forEach( item => item.disabled = !item.disabled )
+      );
+      const plus = document.querySelector( "#plus" );
+      plus.style.display = !plus.style.display || plus.style.display === "none" ? "inline-block" : "none";
+      const brush = document.querySelector( "#brush" );
+      brush.style.opacity = brush.style.opacity === 1 ? 0.3 : 1;
     },
   },
 };

@@ -5,6 +5,14 @@ block styles
 
 block main
   div
+    div#lists-list
+      span( v-for="list in lists" :key="list.id" ).list
+        input( type="color" v-model="list.color" disabled  )
+        input( type="text" v-model="list.name" disabled ).list-name.edit
+      div( style="margin-top: 8px;" )
+        img( src="../assets/img/brush.png" style="opacity: 0.3;" )#brush
+        span( display="inline-block" style="padding: 0 5px" )
+        img( src="../assets/img/plus.png" )#plus
     input( type="text" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newTodo" @keyup.enter="addTodo" ).new-todo
     section( v-show="todos.length" )
       ul#todo-list

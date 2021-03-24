@@ -60,7 +60,7 @@ const passport_config = require( "./util/passportUtil" );
     req.models.User.hasMany( req.models.List ); // add userId to lists
     req.models.List.hasMany( req.models.Todo ); // add listName to todos
 
-    db.sync( { alter: true } ); // check all tables & make them match their model
+    // db.sync( { alter: true } ); // check all tables & make them match their model
     next();
   } );
 

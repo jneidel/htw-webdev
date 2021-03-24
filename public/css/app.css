@@ -16,6 +16,39 @@ body {
   padding: 30px 0;
 }
 
+/* lists boxes */
+#lists-list {
+  display: flex;
+  justify-content: center;
+}
+#lists-list .list {
+  display: inline-block;
+  padding: 5px 5px;
+  margin: 4px 4px 10px 0;
+}
+#lists-list .list-name {
+  font-size: 12px;
+  width: 70px;
+}
+input[type="color"] {
+    border-radius: 100%;
+    height: 14px;
+    width: 14px;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 100%;
+}
+#plus {
+  display: none;
+}
+
 /* 1st box */
 .new-todo {
   margin: 0 0 -17px 0;
