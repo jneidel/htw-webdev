@@ -1,15 +1,16 @@
-function request( route, method, data = {} ) { // non get
-  return fetch( `/api/${route}`, { method, body: JSON.stringify( data ), headers: { "Content-Type": "application/json" } } )
+function request( route, method, data = {} ) {
+  return fetch( `/api/${route}`, { method, body: method === "GET" ? null : JSON.stringify( data ), headers: { "Content-Type": "application/json" } } )
     .catch( err => console.log( err ) );
 }
 
 const App = {
   data() {
     return {
-      newTodo: "",
-      todos  : [],
-      lists  : [],
-      currentList: -1, // index on lists
+      newTodo       : "",
+      todos         : [],
+      lists         : [],
+      currentList   : -1, // index on lists
+      isEditingLists: false,
     };
   },
   mounted() {
@@ -22,7 +23,12 @@ const App = {
         this.todos = data.todos;
         this.lists = data.lists;
         this.currentList = 0;
-        this.updateListsColoredBorder()
+        this.updateListsColoredBorder();
+
+        // inital hide, so that when new lists are added the trash can is visible
+        setTimeout( () => {
+          [ ...document.querySelectorAll( ".trash" ) ].forEach( trash => trash.style.display = "none" );
+        }, 10 );
       } );
   },
   computed: {
@@ -31,7 +37,7 @@ const App = {
     },
     list() { // shorthand to active list
       return this.lists[this.currentList];
-    }
+    },
   },
   methods: {
     pluralize( word, count ) {
@@ -70,24 +76,57 @@ const App = {
       this.todos = this.todos.filter( t => !t.done );
       request( "/todos", "DELETE" );
     },
+    switchActiveList( list ) {
+      if ( !this.isEditingLists ) {
+        const newIndex = this.lists.indexOf( list );
+        if ( this.currentList != newIndex ) {
+          this.currentList = newIndex;
+          this.updateListsColoredBorder();
+          request( `/todos?listId=${  this.list.id}`, "GET" )
+            .then( res => res.json() )
+            .then( data => this.todos = data.todos );
+        }
+      }
+    },
     updateListsColoredBorder() {
       setTimeout( () => {
-        [...document.querySelector( "#lists-list" ).children].forEach( ( list, index ) => {
-          if ( index === this.currentList ) {
+        [ ...document.querySelector( "#lists-list" ).children ].forEach( ( list, index ) => {
+          if ( index === this.currentList )
             list.style.border = `1px solid ${this.list.color}`;
-            // this.toggleEditListMode()
-          }
+          else
+            list.style.border = "1px solid white";
+
         } );
       }, 10 ); // w/o wait vue hasn't generated the spans yet
     },
     toggleEditListMode() {
-      [...document.querySelector( "#lists-list" ).children].forEach( list =>
-        [...list.children].forEach( item => item.disabled = !item.disabled )
+      this.isEditingLists = !this.isEditingLists;
+      [ ...document.querySelector( "#lists-list" ).children ].forEach( list =>
+        [ ...list.children ].forEach( item => item.disabled = !item.disabled )
       );
       const plus = document.querySelector( "#plus" );
-      plus.style.display = !plus.style.display || plus.style.display === "none" ? "inline-block" : "none";
+      plus.style.visibility = !plus.style.visibility || plus.style.visibility === "hidden" ? "visible" : "hidden";
       const brush = document.querySelector( "#brush" );
-      brush.style.opacity = brush.style.opacity === 1 ? 0.3 : 1;
+      brush.style.opacity = brush.style.opacity == 1 ? 0.3 : 1;
+
+      [ ...document.querySelectorAll( ".trash" ) ].forEach( trash => trash.style.display = !trash.style.display || trash.style.display === "none" ? "inline-block" : "none" );
+    },
+    addNewList() {
+      request( "/list", "POST" )
+        .then( res => res.json() )
+        .then( data => this.lists.push( data ) );
+    },
+    editList( list ) {
+      this.updateListsColoredBorder();
+      request( "/list", "PUT", list );
+    },
+    async deleteList( list ) {
+      if ( list.id === this.list.id )
+        this.currentList = 0;
+
+      await request( "/list", "DELETE", { id: list.id } )
+        .then( r => this.lists.splice( this.lists.indexOf( list ), 1 ) );
+      // .catch( err => console.log( err ) )
     },
   },
 };

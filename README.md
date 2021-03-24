@@ -127,3 +127,4 @@ Req:
 
 - [Plus](https://www.flaticon.com/free-icon/plus_1828925)
 - [Paint Brush](https://www.flaticon.com/free-icon/paint-brush_587377)
+- [Trash Can](https://www.flaticon.com/free-icon/garbage-can_3141684)
