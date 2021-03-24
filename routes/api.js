@@ -5,6 +5,7 @@ const passport = require( "passport" );
 
 const passport_config = require( "../util/passportUtil" );
 const { checkNotAuthenticated } = passport_config;
+const randomColor = require( "../util/randomColor" );
 
 router.post( "/login", passport.authenticate( "local", {
   successRedirect: "/home",
@@ -136,45 +137,45 @@ router.get( "/lists", async ( req, res, next ) => {
 
 router.route( "/list" )
   .post( ( req, res, next ) => {
-    const { name, color } = req.body;
-    if ( !name )
-      return next( new Error( "400: no list name" ) );
-    if ( !color )
-      return next( new Error( "400: no list color" ) );
-    if ( color.length !== 7 || color[0] !== "#" )
-      return next( new Error( "400: invalid hex color (#rrggbb)" ) );
+    // const { name, color } = req.body;
+    // if ( !name )
+    //   return next( new Error( "400: no list name" ) );
+    // if ( !color )
+    //   return next( new Error( "400: no list color" ) );
+    // if ( color.length !== 7 || color[0] !== "#" )
+    //   return next( new Error( "400: invalid hex color (#rrggbb)" ) );
 
-    req.models.List.create( { name, color } )
-      .then( list => res.json( { error: false, id: list.id } ) )
+    req.models.List.create( { name: "new list", color: randomColor() } )
+      .then( list => res.json( { error: false, id: list.id, name: list.name, color: list.color } ) )
       .catch( err => next( err ) );
   } )
   .put( ( req, res, next ) => {
-    const { name, newName, color } = req.body;
-    if ( !name )
-      return next( new Error( "400: missing list name" ) );
+    const { id, name, color } = req.body;
+    if ( !id )
+      return next( new Error( "400: missing list id" ) );
     if ( color ) {
       if ( color.length !== 7 || color[0] !== "#" )
         return next( new Error( "400: invalid hex color (#rrggbb)" ) );
     }
-    if ( newName === undefined && color === undefined )
+    if ( name === undefined && color === undefined )
       return next( new Error( "400: nothing to update" ) );
 
     const updateObj = {};
     if ( color !== undefined )
       updateObj.color = color;
-    if ( newName !== undefined )
-      updateObj.name = newName;
+    if ( name !== undefined )
+      updateObj.name = name;
 
-    req.models.List.update( updateObj, { where: { name } } )
+    req.models.List.update( updateObj, { where: { id } } )
       .then( () => res.json( { error: false } ) )
       .catch( err => next( err ) );
   } )
   .delete( ( req, res, next ) => {
-    const { name } = req.body;
-    if ( !name )
-      return next( new Error( "400: missing list name" ) );
+    const { id } = req.body;
+    if ( !id )
+      return next( new Error( "400: missing list id" ) );
 
-    req.models.List.destroy( { where: { name } } )
+    req.models.List.destroy( { where: { id } } )
       .then( () => res.json( { error: false } ) )
       .catch( err => next( err ) );
   } );

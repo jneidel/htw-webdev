@@ -61,33 +61,18 @@ describe( "GET /api/lists", () => {
 
 describe( "POST /api/list", () => {
   test( "success", async () => {
-    const name = "main-list";
-    const color = "#ff0000";
-
     const res = await request( app )
       .post( "/api/list" )
-      .send( { name, color } );
+      .send();
 
     expect( res.status ).toBe( 200 );
     expect( res.body.error ).toBeFalsy();
-  } );
-
-  test( "wrong color format", async () => {
-    const color = "#333";
-
-    const res = await request( app )
-      .post( "/api/list" )
-      .send( { name: "123", color } );
-
-    expect( res.status ).toBe( 400 );
-    expect( res.body.error ).toBeTruthy();
-    expect( res.body.errorMsg ).toBe( "invalid hex color (#rrggbb)" );
   } );
 } );
 
 describe( "PUT /api/list", () => {
   test( "update color & name", async () => {
-    const data = { name: "123", color: "#00ff00", newName: "321" };
+    const data = { id: "123", color: "#00ff00", name: "321" };
 
     const res = await request( app )
       .put( "/api/list" )
@@ -96,14 +81,14 @@ describe( "PUT /api/list", () => {
     expect( res.status ).toBe( 200 );
     expect( res.body.error ).toBeFalsy();
     expect( ListMock.update.mock.calls[0][0].color ).toBe( data.color );
-    expect( ListMock.update.mock.calls[0][0].name ).toBe( data.newName );
+    expect( ListMock.update.mock.calls[0][0].name ).toBe( data.name );
   } );
   test( "wrong color format", async () => {
     const color = "#333";
 
     const res = await request( app )
       .put( "/api/list" )
-      .send( { name: "123", color } );
+      .send( { id: "123", color } );
 
     expect( res.status ).toBe( 400 );
     expect( res.body.error ).toBeTruthy();
@@ -112,7 +97,7 @@ describe( "PUT /api/list", () => {
   test( "send nothing", async () => {
     const res = await request( app )
       .put( "/api/list" )
-      .send( { name: "213" } );
+      .send( { id: "213" } );
 
     expect( res.status ).toBe( 400 );
     expect( res.body.error ).toBeTruthy();
@@ -122,7 +107,7 @@ describe( "PUT /api/list", () => {
 
 describe( "DELETE /api/todo", () => {
   test( "success", async () => {
-    const data = { name: "123" };
+    const data = { id: "123" };
 
     const res = await request( app )
       .delete( "/api/list" )
