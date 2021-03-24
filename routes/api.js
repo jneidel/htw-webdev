@@ -120,17 +120,18 @@ router.get( "/lists", async ( req, res, next ) => {
   } ).catch( err => next( err ) );
 
   if ( lists.length === 0 ) {
-    lists[0] = await req.models.List.create( { name: "default", color: "#000000" } ) // TODO: add UserId: user
+    req.models.List.create( { name: "default", color: "#000000" } ) // TODO: add UserId: user
+      .then( list => res.json( { error: false, todos: [], lists: [ list ] } ) )
+      .catch( err => next( err ) );
+  } else { // no list = no todo, so no need to query
+    req.models.Todo.findAll( {
+      where     : { ListId: lists[0].id },
+      attributes: [ "id", "text", "done", "createdAt" ],
+      order     : [ [ "createdAt", "DESC" ] ],
+    } )
+      .then( todos => res.json( { error: false, todos, lists } ) )
       .catch( err => next( err ) );
   }
-
-  req.models.Todo.findAll( {
-    where     : { ListId: lists[0].id },
-    attributes: [ "id", "text", "createdAt", "done" ],
-    order     : [ [ "createdAt", "DESC" ] ],
-  } )
-    .then( todos => res.json( { error: false, todos, lists } ) )
-    .catch( err => next( err ) );
 } );
 
 router.route( "/list" )

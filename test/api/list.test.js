@@ -16,6 +16,9 @@ beforeEach( () => {
   app.use( bodyParser.json() );
   app.use( bodyParser.urlencoded( { extended: true } ) );
 
+  TodoMock = {
+    findAll: DBresolvedReq(),
+  };
   ListMock = {
     findAll: DBresolvedReq(),
     update : DBresolvedReq(),
@@ -23,11 +26,37 @@ beforeEach( () => {
     create : DBresolvedReq(),
   };
   app.use( ( req, res, next ) => {
-    req.models = { List: ListMock };
+    req.models = { List: ListMock, Todo: TodoMock };
     next();
   } );
   app.use( "/api", require( "../../routes/api" ) );
   app.use( "/api", require( "../../routes/apiErrorHandler" ) );
+} );
+
+describe( "GET /api/lists", () => {
+  test( "success", async () => {
+    const lists = [ { id: "123", name: "list", color: "#00ff00" } ];
+    const todos = [ { id: "456", text: "todo", done: false } ];
+    ListMock.findAll = DBresolvedReq( lists );
+    TodoMock.findAll = DBresolvedReq( todos );
+
+    const res = await request( app )
+      .get( "/api/lists" );
+
+    expect( res.status ).toBe( 200 );
+    expect( res.body ).toEqual( { error: false, lists, todos } );
+  } );
+  test( "no existing list", async () => {
+    const lists = [ { id: "123", name: "default", color: "#000000" } ];
+    ListMock.findAll = DBresolvedReq( [] );
+    ListMock.create = DBresolvedReq( lists[0] );
+
+    const res = await request( app )
+      .get( "/api/lists" );
+
+    expect( res.status ).toBe( 200 );
+    expect( res.body ).toEqual( { error: false, lists, todos: [] } );
+  } );
 } );
 
 describe( "POST /api/list", () => {
