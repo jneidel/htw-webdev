@@ -31,13 +31,15 @@
     "express-flash": "0.0.2",
     "express-session": "^1.17.1",
     "helmet": "^4.2.0",
+    "iconv-lite": "^0.4.24",
     "mariadb": "^2.5.2",
     "method-override": "^3.0.0",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "pug": "^3.0.0",
-    "sequelize": "^6.4.0"
+    "sequelize": "^6.4.0",
+    "superagent": "^6.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

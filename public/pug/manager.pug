@@ -9,7 +9,7 @@ block main
         #unboxed
             h#username=username
             form(action="api/logout", method="post")
-                button.orange-btn(type="submit") log out
+                button#modified-blue-btn(type="submit") log out
         form#boxed(action="api/user/username?_method=PUT", method="post")
             input(type="text", id="username", name="username" placeholder="Username" required)
             button.grey-btn(type="submit") change name

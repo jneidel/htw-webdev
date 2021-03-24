@@ -47,8 +47,9 @@ input::placeholder{
     width: 120px;
 }
 
-.orange-btn{
-    background-color: 	#fda95c;
+#modified-blue-btn{
+    background-color: #0060f0;
+    color: white;
     padding: .7rem 2.7rem;
     border-radius: 2rem;
     border: none;

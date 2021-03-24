@@ -4,8 +4,7 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 const methodOverride = require("method-override");
 
-const passport_config = require("../util/passportUtil");
-const { checkNotAuthenticated, checkAuthenticated, returnAuthentication } = passport_config;
+const { checkNotAuthenticated, checkAuthenticated, returnAuthentication } = require("../util/passportUtil");
 
 router.use(returnAuthentication);
 router.use(methodOverride("_method"));
