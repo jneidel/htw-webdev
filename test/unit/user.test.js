@@ -95,3 +95,24 @@ describe("DELETE /api/user", () => {
             });
     });
 });
+
+describe("fail DELETE /api/user wrong name", ()=>{
+    test("success", async () => {
+        const data = { username: "Leon", password: "w" }
+        const wrongName = {username: "Noel"}
+
+        let agent = request.agent(app);
+
+        agent
+            .post("/api/login")
+            .send(data)
+            .end((err, res) => {
+                expect(res.text).toBe("Found. Redirecting to /app");
+                agent.delete("/api/user")
+                    .send(wrongName)
+                    .end((err, res)=>{
+                        expect(res.text).toBe("Found. Redirecting to /manager");
+                    });
+            });
+    });
+});
