@@ -63,7 +63,7 @@ router.delete("/user", checkAuthenticated, async (req, res, next) => {
     return next(new Error("400: empty username"));
 
   if (username === res.locals.username) {
-    await req.models.User.destroy({ where: { username } });
+    await req.models.User.destroy({ where: { username: username } });
     req.flash("error", "User deleted sucessfully");
     req.logOut();
     res.redirect("../../login");
