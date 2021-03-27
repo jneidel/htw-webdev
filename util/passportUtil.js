@@ -59,7 +59,9 @@ function returnAuthentication( req, res, next ) {
     res.locals.username = req.user.username;
     res.locals.userid = req.user.id;
     res.locals.isAuthorized = true;
-  } else {res.locals.isAuthorized = false;}
+  } else {
+    res.locals.isAuthorized = false;
+  }
 
   next();
 }

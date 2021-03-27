@@ -29,7 +29,7 @@ input{
     justify-content: space-between;
 }
 
-#boxed{
+.boxed{
     display: flex;
     flex-direction: row;
     align-items: center;
