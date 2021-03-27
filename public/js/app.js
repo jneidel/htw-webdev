@@ -90,7 +90,7 @@ const App = {
     },
     updateListsColoredBorder() {
       setTimeout( () => {
-        [ ...document.querySelector( "#lists-list" ).children ].forEach( ( list, index ) => {
+        [ ...document.querySelector( "#list-container" ).children ].forEach( ( list, index ) => {
           if ( index === this.currentList )
             list.style.border = `1px solid ${this.list.color}`;
           else
@@ -101,7 +101,7 @@ const App = {
     },
     toggleEditListMode() {
       this.isEditingLists = !this.isEditingLists;
-      [ ...document.querySelector( "#lists-list" ).children ].forEach( list =>
+      [ ...document.querySelector( "#list-container" ).children ].forEach( list =>
         [ ...list.children ].forEach( item => item.disabled = !item.disabled )
       );
       const plus = document.querySelector( "#plus" );
