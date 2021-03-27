@@ -40,21 +40,32 @@ router.put("/user/username", checkAuthenticated, async (req, res, next) => {
   if (!username || username === "") {
     return next(new Error("400: empty username"));
   }
-  req.models.User.update({ username: username }, { where: { id: res.locals.userid } })
-    .then(() => res.json({ error: false }))
-    .catch(err => next(err));
-  req.flash("error", "Please sign in with new username");
-  req.logOut();
-  res.redirect("../../login");
+  const user = await req.models.User.findOne(
+    {
+      where: { username: req.body.username },
+      raw: true,
+    }
+  );
+  if (user == null) {
+    req.models.User.update({ username: username }, { where: { id: res.locals.userid } })
+      .then(() => res.json({ error: false }))
+      .catch(err => next(err));
+    req.flash("error", "Please sign in with new username");
+    req.logOut();
+    res.redirect("../../login");
+  } else {
+    req.flash("error", "Username already taken");
+    res.redirect("/manager");
+  }
 });
 
-router.delete("/user", checkAuthenticated, async (req, res, next) =>{
+router.delete("/user", checkAuthenticated, async (req, res, next) => {
   const username = req.body.username;
   if (!username || username === "") {
     return next(new Error("400: empty username"));
   }
-  if (username === res.locals.username){
-    req.models.User.destroy({where: {username: username}})
+  if (username === res.locals.username) {
+    req.models.User.destroy({ where: { username: username } });
     req.flash("error", "User deleted sucessfully");
     req.logOut();
     res.redirect("../../login");

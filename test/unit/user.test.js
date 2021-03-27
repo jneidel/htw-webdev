@@ -20,7 +20,7 @@ const DBrejectedReq = err => jest.fn(() => Promise.reject(err));
 
 let app, UserMock;
 
-beforeEach(async () => {
+beforeEach(() => {
     // setup app, different instances for paralell execution w/ seperate mocks
     app = express();
     app.use(bodyParser.json());
@@ -32,8 +32,6 @@ beforeEach(async () => {
         username: "Leon",
         password: "$2b$10$kCzJI1ZWHN0uAZ0YFBNEFemddORcYvwwREBo.biSvGTuhcsW127JK",
     };
-
-    const validPassword = "w";
 
     UserMock = {
         findAll: DBresolvedReq(),
@@ -69,6 +67,12 @@ beforeEach(async () => {
         return done(null, standarUser);
     });
 
+    app.use((req, res, next) => {
+        res.locals.username = standarUser.username;
+        res.locals.userid = standarUser.id;
+        next();
+    })
+
     app.use("/", require("../../routes"));
     app.use("/api", require("../../routes/api"));
     app.use("/api", require("../../routes/apiErrorHandler"));
@@ -87,7 +91,8 @@ describe("DELETE /api/user", () => {
             .send(data)
             .end((err, res) => {
                 expect(res.text).toBe("Found. Redirecting to /app");
-                agent.delete("/api/user")
+                agent
+                    .delete("/api/user")
                     .send(data)
                     .end((err, res) => {
                         expect(res.text).toBe("Found. Redirecting to ../../login");
@@ -106,7 +111,8 @@ describe("DELETE /api/user", () => {
             .send(data)
             .end((err, res) => {
                 expect(res.text).toBe("Found. Redirecting to /app");
-                agent.delete("/api/user")
+                agent
+                    .delete("/api/user")
                     .send(wrongName)
                     .end((err, res) => {
                         expect(res.text).toBe("Found. Redirecting to /manager");
@@ -125,7 +131,8 @@ describe("DELETE /api/user", () => {
             .send(data)
             .end((err, res) => {
                 expect(res.text).toBe("Found. Redirecting to /app");
-                agent.delete("/api/user")
+                agent
+                    .delete("/api/user")
                     .send(emptyName)
                     .end((err, res) => {
                         expect(res.status).toBe(400);
@@ -146,7 +153,8 @@ describe("DELETE /api/user", () => {
             .send(data)
             .end((err, res) => {
                 expect(res.text).toBe("Found. Redirecting to /app");
-                agent.delete("/api/user")
+                agent
+                    .delete("/api/user")
                     .send(emptyName)
                     .end((err, res) => {
                         expect(res.status).toBe(400);
@@ -156,3 +164,49 @@ describe("DELETE /api/user", () => {
             });
     });
 });
+
+// throw unreasonable TypeErrors
+
+/* describe("Put /api/user/username", () => {
+    test("success", async () => {
+        const data = { username: "Leon", password: "w" }
+        const newName = { username: "Ulrich" }
+
+        let agent = request.agent(app);
+
+        agent
+            .post("/api/login")
+            .send(data)
+            .end((err, res) => {
+                expect(res.text).toBe("Found. Redirecting to /app");
+                agent
+                    .put("/api/user/username")
+                    .send(newName)
+                    .end((err, res) => {
+                        //expect(res.text).toBe("Found. Redirecting to ../../login");
+                    });
+            });
+    });
+}); */
+
+/* describe("PUT /api/user/password", () => {
+    test("undefined username - don't delete user", async () => {
+        const data = { username: "Leon", password: "w" }
+        const newPassword = {password: "p"}
+
+        let agent = request.agent(app);
+
+        agent
+            .post("/api/login")
+            .send(data)
+            .end((err, res) => {
+                expect(res.text).toBe("Found. Redirecting to /app");
+                agent
+                    .put("/api/user/password")
+                    .send(newPassword)
+                    .end((err, res) => {
+                        //expect(res.text).toBe("Found. Redirecting to ../../login");
+                    });
+            });
+    });
+}); */
