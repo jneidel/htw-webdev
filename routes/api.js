@@ -26,12 +26,10 @@ router.put( "/user/password", checkAuthenticated, async ( req, res, next ) => {
   const hashedPassword = await bcrypt.hash( password, 10 );
   const updateObj = { password: hashedPassword };
 
-  req.models.User.update( updateObj,
+  await req.models.User.update( updateObj,
     {
       where: { id: res.locals.userid },
-    } )
-    .then( () => res.json( { error: false } ) )
-    .catch( err => next( err ) );
+    } );
   req.flash( "error", "Please sign in with new password" );
   req.logOut();
   res.redirect( "../../login" );
@@ -49,7 +47,7 @@ router.put( "/user/username", checkAuthenticated, async ( req, res, next ) => {
     }
   );
   if ( user == null ) {
-    req.models.User.update( { username }, { where: { id: res.locals.userid } } )
+    await req.models.User.update( { username }, { where: { id: res.locals.userid } } )
     req.flash( "error", "Please sign in with new username" );
     req.logOut();
     res.redirect( "../../login" );
@@ -65,7 +63,7 @@ router.delete( "/user", checkAuthenticated, async ( req, res, next ) => {
     return next( new Error( "400: empty username" ) );
 
   if ( username === res.locals.username ) {
-    req.models.User.destroy( { where: { username } } );
+    await req.models.User.destroy( { where: { username } } );
     req.flash( "error", "User deleted sucessfully" );
     req.logOut();
     res.redirect( "../../login" );
@@ -85,7 +83,7 @@ router.post( "/register", checkNotAuthenticated, async ( req, res ) => {
     );
     if ( user == null ) {
       const hashedPassword = await bcrypt.hash( req.body.password, 10 );
-      req.models.User.create( {
+      await req.models.User.create( {
         username: req.body.username,
         password: hashedPassword,
       } );
