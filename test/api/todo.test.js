@@ -1,3 +1,4 @@
+require( "iconv-lite" ).encodingExists( "foo" );
 const express = require( "express" );
 const bodyParser = require( "body-parser" );
 const request = require( "supertest" );
