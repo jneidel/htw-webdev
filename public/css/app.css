@@ -107,8 +107,10 @@ button.destroy {
   border: none;
   outline: none;
   background: transparent;
-  opacity: 0.25;
   padding-right: 0;
+}
+.grayedOut {
+  opacity: 0.30;
 }
 
 .todo.completed .edit {

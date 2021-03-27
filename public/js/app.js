@@ -3,6 +3,11 @@ function request( route, method, data = {} ) {
     .catch( err => console.log( err ) );
 }
 
+function addPermaToTodos( t ) {
+  t.perma = `/app/todo/${t.id}`;
+  return t;
+}
+
 const App = {
   data() {
     return {
@@ -20,7 +25,7 @@ const App = {
         if ( data.error )
           throw new Error( data.errorMsg );
 
-        this.todos = data.todos;
+        this.todos = data.todos.map( addPermaToTodos );
         this.lists = data.lists;
         this.currentList = 0;
         this.updateListsColoredBorder();
@@ -84,7 +89,7 @@ const App = {
           this.updateListsColoredBorder();
           request( `/todos?listId=${  this.list.id}`, "GET" )
             .then( res => res.json() )
-            .then( data => this.todos = data.todos );
+            .then( data => this.todos = data.todos.map( addPermaToTodos ) );
         }
       }
     },

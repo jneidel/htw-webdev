@@ -11,7 +11,7 @@ block main
         input( type="checkbox" v-model="todo.done" @click="toggleCompleted( todo )" ).toggle
         input( type="text" v-model="todo.text" @keyup.enter="edit( todo )" ).edit
       button( @click="removeTodo( todo )" ).destroy
-        img( src="./../../assets/img/delete.png" style="margin: 0;" )
+        img( src="./../../assets/img/delete.png" style="margin: 0;" ).grayedOut
 
 block scripts
   script( src="./../../assets/vue.js" )

@@ -23,7 +23,9 @@ block main
               input( type="checkbox" v-model="todo.done" @click="toggleCompleted( todo )" ).toggle
               input( type="text" v-model="todo.text" @keyup.enter="edit( todo )" ).edit
             button( @click="removeTodo( todo )" ).destroy
-              img( src="../assets/img/delete.png" style="margin: 0;" )
+              img( src="../assets/img/delete.png" style="margin: 0;" ).grayedOut
+            a( :href="todo.perma" )
+              img( src="../assets/img/ref.png" alt="Perma Link" style="margin-top: 10px;" ).grayedOut
       section#todo-footer( v-show="todos.length" )
         p {{remaining}} {{pluralize('item', remaining)}} left
         button.clear-completed( @click="removeCompleted" v-show="todos.length > remaining" ) Clear completed
