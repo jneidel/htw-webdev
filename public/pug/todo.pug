@@ -1,0 +1,50 @@
+extends layout
+
+block styles
+  link( rel="stylesheet" type="text/css" href="./../../css/app.css" )
+  link( href="./../../css/layout.css" rel="stylesheet" type="text/css" )
+
+block main
+  ul#todo-list( style="height: 68px;" )
+    li( v-for="todo in todos" :key="todo.id" :class="{completed: todo.done}" ).todo
+      span
+        input( type="checkbox" v-model="todo.done" @click="toggleCompleted( todo )" ).toggle
+        input( type="text" v-model="todo.text" @keyup.enter="edit( todo )" ).edit
+      button( @click="removeTodo( todo )" ).destroy
+        img( src="./../../assets/img/delete.png" style="margin: 0;" )
+
+block scripts
+  script( src="./../../assets/vue.js" )
+  script.
+    // get todo data from pug: https://stackoverflow.com/a/11985095
+    const todo = {
+      id: "#{todo.id}",
+      text: "#{todo.text}",
+      done: "#{todo.done}",
+    };
+    todo.done = todo.done === "false" ? false : true; // translate bool string to real bool
+
+    function request( route, method, data = {} ) {
+      return fetch( `/api/${route}`, { method, body: method === "GET" ? null : JSON.stringify( data ), headers: { "Content-Type": "application/json" } } )
+        .catch( err => console.log( err ) );
+    }
+    const App = {
+      data() { return { todos: [ todo ] }; },
+      methods: {
+        removeTodo( todo ) {
+          request( "/todo", "DELETE", { id: todo.id } );
+          const index = this.todos.indexOf( todo );
+          this.todos.splice( index, 1 );
+        },
+        edit( todo ) {
+          todo.text = todo.text.trim();
+          if ( !todo.text )
+            this.removeTodo( todo );
+          request( "/todo", "PUT", { id: todo.id, text: todo.text, listId: this.list.id } );
+        },
+        toggleCompleted( todo ) {
+          request( "/todo", "PUT", { id: todo.id, done: !todo.done } );
+        },
+      },
+    };
+    Vue.createApp( App ).mount( "#main" );

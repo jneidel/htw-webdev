@@ -50,7 +50,6 @@ router.route( "/todos" )
     if ( !listId )
       return next( new Error( "400: missing listId" ) );
 
-
     req.models.Todo.findAll( {
       where     : { ListId: listId },
       attributes: [ "id", "text", "createdAt", "done" ],
