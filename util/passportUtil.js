@@ -27,7 +27,7 @@ function initialize( passport ) {
     usernameField    : "username",
     passReqToCallback: true,
   }, authenticateUser ) );
-  
+
   passport.serializeUser( ( user, done ) => done( null, user.id ) );
   passport.deserializeUser( async ( req, id, done ) => {
     const user = await req.models.User.findOne(
@@ -55,13 +55,11 @@ function checkNotAuthenticated( req, res, next ) {
 }
 
 function returnAuthentication( req, res, next ) {
-  if ( req.isAuthenticated() ){
+  if ( req.isAuthenticated() ) {
     res.locals.username = req.user.username;
     res.locals.userid = req.user.id;
     res.locals.isAuthorized = true;
-  }
-  else
-    res.locals.isAuthorized = false;
+  } else {res.locals.isAuthorized = false;}
 
   next();
 }

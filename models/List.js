@@ -1,22 +1,23 @@
 const { DataTypes } = require( "sequelize" );
 
-module.exports = function User( db ) {
-  return db.define( "User", {
+module.exports = function List( db, User ) {
+  return db.define( "List", {
     id: {
       type        : DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey  : true,
       allowNull   : false,
     },
-    username: {
+    name: {
       type     : DataTypes.STRING,
       allowNull: false,
     },
-    password: {
+    color: {
       type     : DataTypes.STRING,
       allowNull: false,
+      // random color gets rolled on client
     },
   }, {
-    tableName: "users",
+    tableName: "lists",
   } );
 };

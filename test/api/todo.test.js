@@ -24,28 +24,33 @@ beforeEach( () => {
     destroy: DBresolvedReq(),
     create : DBresolvedReq(),
   };
+  ListMock = {
+    findAll: DBresolvedReq(),
+  };
   app.use( ( req, res, next ) => {
-    req.models = { Todo: TodoMock };
+    req.models = { Todo: TodoMock, List: ListMock };
     next();
   } );
   app.use( "/api", require( "../../routes/api" ) );
   app.use( "/api", require( "../../routes/apiErrorHandler" ) );
 } );
 
-
-describe( "GET /api/todos", () => {
+describe( "POST /api/todo", () => {
   test( "success", async () => {
-    const expectedTodos = [
-      { id: "123", text: "my todo", createdAt: "now" },
-    ];
-    TodoMock.findAll = DBresolvedReq( expectedTodos );
+    const expectedResults = [ { id: "123", text: "todo", done: false } ];
+    TodoMock.findAll = DBresolvedReq( expectedResults );
 
     const res = await request( app )
-      .get( "/api/todos" );
-
+      .get( "/api/todos?listId=456" );
     expect( res.status ).toBe( 200 );
-    expect( res.body.error ).toBeFalsy();
-    expect( res.body.todos ).toEqual( expectedTodos );
+    expect( res.body.todos ).toEqual( expectedResults );
+  } );
+  test( "no listId", async () => {
+    const res = await request( app )
+      .get( "/api/todos" );
+    expect( res.status ).toBe( 400 );
+    expect( res.body.error ).toBeTruthy();
+    expect( res.body.errorMsg ).toBe( "missing listId" );
   } );
 } );
 
@@ -56,7 +61,8 @@ describe( "POST /api/todo", () => {
 
     const res = await request( app )
       .post( "/api/todo" )
-      .send( { text: "a todo" } );
+      .send( { text: "a todo", listId: "456" } );
+    // invalid listId (foreign key error) not testable in unit tests
 
     expect( res.status ).toBe( 200 );
     expect( res.body.error ).toBeFalsy();
