@@ -51,9 +51,16 @@ const passport_config = require( "./util/passportUtil" );
     // initialize db tables
     req.models = {
       User: models.User( db ),
+      List: models.List( db ),
       Todo: models.Todo( db ),
     };
-    db.sync( { alter: true } ); // check all tables & make them match their model
+
+    // foreign keys, work on initalized models
+    // docs: https://sequelize.org/v5/manual/associations.html#foreign-keys
+    req.models.User.hasMany( req.models.List, { onDelete: "CASCADE" } ); // add userId to lists
+    req.models.List.hasMany( req.models.Todo, { onDelete: "CASCADE" } ); // add listName to todos
+
+    // db.sync( { alter: true } ); // check all tables & make them match their model
     next();
   } );
 
