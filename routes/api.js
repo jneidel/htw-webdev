@@ -30,7 +30,7 @@ router.put("/user/password", checkAuthenticated, async (req, res, next) => {
     })
     .then(() => res.json({ error: false }))
     .catch(err => next(err));
-  req.flash("error", "Please sign in again")
+  req.flash("error", "Please sign in with new password")
   req.logOut();
   res.redirect("../../login")
 });
@@ -43,7 +43,7 @@ router.put("/user/username", checkAuthenticated, async (req, res, next) => {
   req.models.User.update({ username: username }, { where: { id: res.locals.userid } })
     .then(() => res.json({ error: false }))
     .catch(err => next(err));
-  req.flash("error", "Please sign in again");
+  req.flash("error", "Please sign in with new username");
   req.logOut();
   res.redirect("../../login");
 });

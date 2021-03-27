@@ -89,17 +89,15 @@ describe("DELETE /api/user", () => {
                 expect(res.text).toBe("Found. Redirecting to /app");
                 agent.delete("/api/user")
                     .send(data)
-                    .end((err, res)=>{
+                    .end((err, res) => {
                         expect(res.text).toBe("Found. Redirecting to ../../login");
                     });
             });
     });
-});
 
-describe("fail DELETE /api/user wrong name", ()=>{
-    test("success", async () => {
+    test("wrong username - don't delete user", async () => {
         const data = { username: "Leon", password: "w" }
-        const wrongName = {username: "Noel"}
+        const wrongName = { username: "Noel" }
 
         let agent = request.agent(app);
 
@@ -110,8 +108,50 @@ describe("fail DELETE /api/user wrong name", ()=>{
                 expect(res.text).toBe("Found. Redirecting to /app");
                 agent.delete("/api/user")
                     .send(wrongName)
-                    .end((err, res)=>{
+                    .end((err, res) => {
                         expect(res.text).toBe("Found. Redirecting to /manager");
+                    });
+            });
+    });
+
+    test("empty username - don't delete user", async () => {
+        const data = { username: "Leon", password: "w" }
+        const emptyName = { username: "" }
+
+        let agent = request.agent(app);
+
+        agent
+            .post("/api/login")
+            .send(data)
+            .end((err, res) => {
+                expect(res.text).toBe("Found. Redirecting to /app");
+                agent.delete("/api/user")
+                    .send(emptyName)
+                    .end((err, res) => {
+                        expect(res.status).toBe(400);
+                        expect(res.body.error).toBeTruthy();
+                        expect(res.body.errorMsg).toBe("empty username");
+                    });
+            });
+    });
+
+    test("undefined username - don't delete user", async () => {
+        const data = { username: "Leon", password: "w" }
+        const emptyName = {}
+
+        let agent = request.agent(app);
+
+        agent
+            .post("/api/login")
+            .send(data)
+            .end((err, res) => {
+                expect(res.text).toBe("Found. Redirecting to /app");
+                agent.delete("/api/user")
+                    .send(emptyName)
+                    .end((err, res) => {
+                        expect(res.status).toBe(400);
+                        expect(res.body.error).toBeTruthy();
+                        expect(res.body.errorMsg).toBe("empty username");
                     });
             });
     });
