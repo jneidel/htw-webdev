@@ -79,8 +79,8 @@ beforeEach( () => {
 } );
 
 // these test run fine locally, but fail on CI
-describe( "DELETE /api/user", () => {
-  test.skip( "success", async () => {
+describe( "DELETE /api/users", () => {
+  test( "success", async () => {
     const data = { username: "Leon", password: "w" };
 
     const agent = request.agent( app );
@@ -91,7 +91,7 @@ describe( "DELETE /api/user", () => {
       .end( ( err, res ) => {
         expect( res.text ).toBe( "Found. Redirecting to /app" );
         agent
-          .delete( "/api/user" )
+          .delete( "/api/users" )
           .send( data )
           .end( ( err, res ) => {
             expect( res.text ).toBe( "Found. Redirecting to ../../login" );
@@ -99,7 +99,7 @@ describe( "DELETE /api/user", () => {
       } );
   } );
 
-  test.skip( "wrong username - don't delete user", async () => {
+  test( "wrong username - don't delete user", async () => {
     const data = { username: "Leon", password: "w" };
     const wrongName = { username: "Noel" };
 
@@ -111,7 +111,7 @@ describe( "DELETE /api/user", () => {
       .end( ( err, res ) => {
         expect( res.text ).toBe( "Found. Redirecting to /app" );
         agent
-          .delete( "/api/user" )
+          .delete( "/api/users" )
           .send( wrongName )
           .end( ( err, res ) => {
             expect( res.text ).toBe( "Found. Redirecting to /manager" );
@@ -119,7 +119,7 @@ describe( "DELETE /api/user", () => {
       } );
   } );
 
-  test.skip( "empty username - don't delete user", async () => {
+  test( "empty username - don't delete user", async () => {
     const data = { username: "Leon", password: "w" };
     const emptyName = { username: "" };
 
@@ -131,17 +131,17 @@ describe( "DELETE /api/user", () => {
       .end( ( err, res ) => {
         expect( res.text ).toBe( "Found. Redirecting to /app" );
         agent
-          .delete( "/api/user" )
+          .delete( "/api/users" )
           .send( emptyName )
           .end( ( err, res ) => {
             expect( res.status ).toBe( 400 );
             expect( res.body.error ).toBeTruthy();
-            expect( res.body.errorMsg ).toBe( "empty username" );
+            expect( res.body.errorMsg ).toBe( "empty parameters" );
           } );
       } );
   } );
 
-  test.skip( "undefined username - don't delete user", async () => {
+  test( "undefined username - don't delete user", async () => {
     const data = { username: "Leon", password: "w" };
     const emptyName = {};
 
@@ -153,12 +153,12 @@ describe( "DELETE /api/user", () => {
       .end( ( err, res ) => {
         expect( res.text ).toBe( "Found. Redirecting to /app" );
         agent
-          .delete( "/api/user" )
+          .delete( "/api/users" )
           .send( emptyName )
           .end( ( err, res ) => {
             expect( res.status ).toBe( 400 );
             expect( res.body.error ).toBeTruthy();
-            expect( res.body.errorMsg ).toBe( "empty username" );
+            expect( res.body.errorMsg ).toBe( "empty parameters" );
           } );
       } );
   } );
