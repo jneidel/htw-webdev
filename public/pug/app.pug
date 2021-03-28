@@ -4,28 +4,31 @@ block styles
   link( rel="stylesheet" type="text/css" href="../css/app.css" )
 
 block main
-  div
-    div#lists-list
+  #grid-container
+    #list-container
       span( v-for="list in lists" :key="list.id" @click="switchActiveList( list )" ).list
         input( type="color" v-model="list.color" disabled @change="editList( list )" )
         input( type="text" v-model="list.name" disabled @keyup.enter="editList( list )" ).list-name.edit
-        img( src="../assets/img/trash-can.png" style="opacity: 0.7;" @click="deleteList( list )" ).trash
+        img( src="../assets/img/trash-can.png" style="opacity: 0.7; display: inline-block;" @click="deleteList( list )" ).trash
       div( style="margin-top: 8px;" )
         img( src="../assets/img/brush.png" style="opacity: 0.3;" @click="toggleEditListMode" )#brush
         span( display="inline-block" style="padding: 0 5px" )
         img( src="../assets/img/plus.png" @click="addNewList" )#plus
-    input( type="text" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newTodo" @keyup.enter="addTodo" ).new-todo
-    section( v-show="todos.length" )
-      ul#todo-list
-        li( v-for="todo in todos" :key="todo.id" :class="{completed: todo.done}" ).todo
-          span
-            input( type="checkbox" v-model="todo.done" @click="toggleCompleted( todo )" ).toggle
-            input( type="text" v-model="todo.text" @keyup.enter="edit( todo )" ).edit
-          button( @click="removeTodo( todo )" ).destroy
-            img( src="../assets/img/delete.png" style="margin: 0;" )
-    section#todo-footer( v-show="todos.length" )
-      p {{remaining}} {{pluralize('item', remaining)}} left
-      button.clear-completed( @click="removeCompleted" v-show="todos.length > remaining" ) Clear completed
+    #todo-container
+      input( type="text" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newTodo" @keyup.enter="addTodo" ).new-todo
+      section( v-show="todos.length" )
+        ul#todo-list
+          li( v-for="todo in todos" :key="todo.id" :class="{completed: todo.done}" ).todo
+            span
+              input( type="checkbox" v-model="todo.done" @click="toggleCompleted( todo )" ).toggle
+              input( type="text" v-model="todo.text" @keyup.enter="edit( todo )" ).edit
+            button( @click="removeTodo( todo )" ).destroy
+              img( src="../assets/img/delete.png" style="margin: 0;" ).grayedOut
+            a( :href="todo.perma" )
+              img( src="../assets/img/ref.png" alt="Perma Link" style="margin-top: 10px;" ).grayedOut
+      section#todo-footer( v-show="todos.length" )
+        p {{remaining}} {{pluralize('item', remaining)}} left
+        button.clear-completed( @click="removeCompleted" v-show="todos.length > remaining" ) Clear completed
 
 block scripts
   script( src="../assets/vue.js" )

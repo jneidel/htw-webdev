@@ -78,7 +78,7 @@ beforeEach( () => {
 } );
 
 // these test run fine locally, but fail on CI
-describe( "DELETE /api/user", () => {
+describe( "DELETE /api/users", () => {
   test.skip( "success", async () => {
     const data = { username: "Leon", password: "w" };
 
@@ -90,7 +90,7 @@ describe( "DELETE /api/user", () => {
       .end( ( err, res ) => {
         expect( res.text ).toBe( "Found. Redirecting to /app" );
         agent
-          .delete( "/api/user" )
+          .delete( "/api/users" )
           .send( data )
           .end( ( err, res ) => {
             expect( res.text ).toBe( "Found. Redirecting to ../../login" );
@@ -110,7 +110,7 @@ describe( "DELETE /api/user", () => {
       .end( ( err, res ) => {
         expect( res.text ).toBe( "Found. Redirecting to /app" );
         agent
-          .delete( "/api/user" )
+          .delete( "/api/users" )
           .send( wrongName )
           .end( ( err, res ) => {
             expect( res.text ).toBe( "Found. Redirecting to /manager" );
@@ -130,12 +130,12 @@ describe( "DELETE /api/user", () => {
       .end( ( err, res ) => {
         expect( res.text ).toBe( "Found. Redirecting to /app" );
         agent
-          .delete( "/api/user" )
+          .delete( "/api/users" )
           .send( emptyName )
           .end( ( err, res ) => {
             expect( res.status ).toBe( 400 );
             expect( res.body.error ).toBeTruthy();
-            expect( res.body.errorMsg ).toBe( "empty username" );
+            expect( res.body.errorMsg ).toBe( "empty parameters" );
           } );
       } );
   } );
@@ -152,12 +152,12 @@ describe( "DELETE /api/user", () => {
       .end( ( err, res ) => {
         expect( res.text ).toBe( "Found. Redirecting to /app" );
         agent
-          .delete( "/api/user" )
+          .delete( "/api/users" )
           .send( emptyName )
           .end( ( err, res ) => {
             expect( res.status ).toBe( 400 );
             expect( res.body.error ).toBeTruthy();
-            expect( res.body.errorMsg ).toBe( "empty username" );
+            expect( res.body.errorMsg ).toBe( "empty parameters" );
           } );
       } );
   } );
