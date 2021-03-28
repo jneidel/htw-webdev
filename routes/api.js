@@ -104,7 +104,7 @@ router.post( "/logout", ( req, res ) => {
 
 // todo crud
 router.route( "/todos")
-  .get( ( req, res, next ) => {
+  .get(checkAuthenticated,  ( req, res, next ) => {
     const { listId } = req.query;
 
     if ( !listId )
@@ -127,7 +127,7 @@ router.route( "/todos")
   } );
 
 router.route( "/todo" )
-  .post( ( req, res, next ) => {
+  .post(checkAuthenticated, ( req, res, next ) => {
     const { text, listId } = req.body;
     if ( !text )
       return next( new Error( "400: empty todo text" ) );
@@ -143,7 +143,7 @@ router.route( "/todo" )
         return next( err );
       } );
   } )
-  .put( ( req, res, next ) => {
+  .put(checkAuthenticated, ( req, res, next ) => {
     const { id, text, done } = req.body;
     if ( !id )
       return next( new Error( "400: missing todo id" ) );
@@ -162,7 +162,7 @@ router.route( "/todo" )
       .then( () => res.json( { error: false } ) )
       .catch( err => next( err ) );
   } )
-  .delete( ( req, res, next ) => {
+  .delete(checkAuthenticated, ( req, res, next ) => {
     const { id } = req.body;
     if ( !id )
       return next( new Error( "400: missing todo id" ) );
@@ -173,7 +173,7 @@ router.route( "/todo" )
   } );
 
 // lists crud
-router.get( "/lists", async ( req, res, next ) => {
+router.get("/lists",checkAuthenticated, async ( req, res, next ) => {
   const userId = res.locals.userid;
   const lists = await req.models.List.findAll( {
     where     : { UserId: userId },
@@ -197,13 +197,13 @@ router.get( "/lists", async ( req, res, next ) => {
 } );
 
 router.route( "/list" )
-  .post( ( req, res, next ) => {
+  .post(checkAuthenticated, ( req, res, next ) => {
     const userId = res.locals.userid;
     req.models.List.create( { UserId: userId, name: "new list", color: randomColor() } )
       .then( list => res.json( { error: false, id: list.id, name: list.name, color: list.color } ) )
       .catch( err => next( err ) );
   } )
-  .put( ( req, res, next ) => {
+  .put(checkAuthenticated, ( req, res, next ) => {
     const { id, name, color } = req.body;
     if ( !id )
       return next( new Error( "400: missing list id" ) );
@@ -224,7 +224,7 @@ router.route( "/list" )
       .then( () => res.json( { error: false } ) )
       .catch( err => next( err ) );
   } )
-  .delete( ( req, res, next ) => {
+  .delete(checkAuthenticated, ( req, res, next ) => {
     const { id } = req.body;
     if ( !id )
       return next( new Error( "400: missing list id" ) );
