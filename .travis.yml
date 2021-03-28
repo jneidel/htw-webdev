@@ -1,9 +1,0 @@
-language: node_js
-node_js:
-  - "15"
-notifications:
-  email:
-    recipients:
-      - travis-ci@jneidel.com
-    on_success: never
-    on_failure: always

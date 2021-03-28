@@ -46,7 +46,6 @@ beforeEach( () => {
     next();
   } );
 
-  app.use( flash() );
   app.use( session( {
     secret           : "secret",
     resave           : false,
