@@ -128,4 +128,4 @@ Req:
 - [Plus](https://www.flaticon.com/free-icon/plus_1828925)
 - [Paint Brush](https://www.flaticon.com/free-icon/paint-brush_587377)
 - [Trash Can](https://www.flaticon.com/free-icon/garbage-can_3141684)
-- [Perma Link Reference](https://www.flaticon.com/free-icon/more_512222)
+- [Perma Link Reference](https://www.flaticon.com/free-icon/share_1059157)
