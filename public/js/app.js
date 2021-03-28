@@ -3,6 +3,11 @@ function request( route, method, data = {} ) {
     .catch( err => console.log( err ) );
 }
 
+function addPermaToTodos( t ) {
+  t.perma = `/app/todo/${t.id}`;
+  return t;
+}
+
 const App = {
   data() {
     return {
@@ -20,7 +25,7 @@ const App = {
         if ( data.error )
           throw new Error( data.errorMsg );
 
-        this.todos = data.todos;
+        this.todos = data.todos.map( addPermaToTodos );
         this.lists = data.lists;
         this.currentList = 0;
         this.updateListsColoredBorder();
@@ -84,13 +89,13 @@ const App = {
           this.updateListsColoredBorder();
           request( `/todos?listId=${  this.list.id}`, "GET" )
             .then( res => res.json() )
-            .then( data => this.todos = data.todos );
+            .then( data => this.todos = data.todos.map( addPermaToTodos ) );
         }
       }
     },
     updateListsColoredBorder() {
       setTimeout( () => {
-        [ ...document.querySelector( "#lists-list" ).children ].forEach( ( list, index ) => {
+        [ ...document.querySelector( "#list-container" ).children ].forEach( ( list, index ) => {
           if ( index === this.currentList )
             list.style.border = `1px solid ${this.list.color}`;
           else
@@ -101,7 +106,7 @@ const App = {
     },
     toggleEditListMode() {
       this.isEditingLists = !this.isEditingLists;
-      [ ...document.querySelector( "#lists-list" ).children ].forEach( list =>
+      [ ...document.querySelector( "#list-container" ).children ].forEach( list =>
         [ ...list.children ].forEach( item => item.disabled = !item.disabled )
       );
       const plus = document.querySelector( "#plus" );
@@ -114,7 +119,13 @@ const App = {
     addNewList() {
       request( "/list", "POST" )
         .then( res => res.json() )
-        .then( data => this.lists.push( data ) );
+        .then( data => this.lists.push( data ) )
+        .then( setTimeout( () => {
+          const lists = [ ...document.querySelector( "#list-container" ).children ];
+          const newList = lists[lists.length-2].children;
+          newList[0].disabled = false;
+          newList[1].disabled = false;
+        }, 100 ) );
     },
     editList( list ) {
       this.updateListsColoredBorder();

@@ -116,16 +116,15 @@ router.route("/todos")
     if (!listId)
       return next(new Error("400: missing listId"));
 
-
-    req.models.Todo.findAll({
-      where: { ListId: listId },
-      attributes: ["id", "text", "createdAt", "done"],
-      order: [["createdAt", "DESC"]],
-    })
-      .then(todos => res.json({ error: false, todos }))
-      .catch(err => next(err));
+    req.models.Todo.findAll( {
+      where     : { ListId: listId },
+      attributes: [ "id", "text", "createdAt", "done" ],
+      order     : [ [ "createdAt", "DESC" ] ],
+    } )
+      .then( todos => res.json( { error: false, todos } ) )
+      .catch( err => next( err ) );
   })
-  .delete((req, res, next) => {
+  .delete( ( req, res, next ) => {
     // delete all done todos
     req.models.Todo.destroy({ where: { done: true } })
       .then(() => res.json({ error: false }))
