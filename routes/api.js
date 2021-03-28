@@ -182,7 +182,7 @@ router.get( "/lists", checkAuthenticated, async ( req, res, next ) => {
   } ).catch( err => next( err ) );
 
   if ( lists.length === 0 ) {
-    req.models.List.create( { UserId: userId, name: "default", color: randomColor() } ) // TODO: add UserId: user
+    req.models.List.create( { UserId: userId, name: "default", color: randomColor() } )
       .then( list => res.json( { error: false, todos: [], lists: [ list ] } ) )
       .catch( err => next( err ) );
   } else { // no list = no todo, so no need to query
