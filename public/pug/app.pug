@@ -9,7 +9,7 @@ block main
       span( v-for="list in lists" :key="list.id" @click="switchActiveList( list )" ).list
         input( type="color" v-model="list.color" disabled @change="editList( list )" )
         input( type="text" v-model="list.name" disabled @keyup.enter="editList( list )" ).list-name.edit
-        img( src="../assets/img/trash-can.png" style="opacity: 0.7;" @click="deleteList( list )" ).trash
+        img( src="../assets/img/trash-can.png" style="opacity: 0.7; display: inline-block;" @click="deleteList( list )" ).trash
       div( style="margin-top: 8px;" )
         img( src="../assets/img/brush.png" style="opacity: 0.3;" @click="toggleEditListMode" )#brush
         span( display="inline-block" style="padding: 0 5px" )

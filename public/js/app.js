@@ -119,7 +119,13 @@ const App = {
     addNewList() {
       request( "/list", "POST" )
         .then( res => res.json() )
-        .then( data => this.lists.push( data ) );
+        .then( data => this.lists.push( data ) )
+        .then( setTimeout( () => {
+          const lists = [ ...document.querySelector( "#list-container" ).children ];
+          const newList = lists[lists.length-2].children;
+          newList[0].disabled = false;
+          newList[1].disabled = false;
+        }, 100 ) );
     },
     editList( list ) {
       this.updateListsColoredBorder();
