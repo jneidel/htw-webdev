@@ -64,5 +64,5 @@ module.exports = function randomColor() {
     "#fecd1a",
   ];
 
-  return colors[Math.floor(Math.random() * colors.length)];
+  return colors[Math.floor( Math.random() * colors.length )];
 };

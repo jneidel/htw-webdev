@@ -1,0 +1,21 @@
+extends layout
+
+block styles
+    link(rel="stylesheet" type="text/css" href="../css/manager.css")
+
+block main
+    #credentials
+        p=messages.error
+        #unboxed
+            h#username=username
+            form(action="api/logout", method="post")
+                button#modified-blue-btn(type="submit") log out
+        form.boxed(action="api/users?_method=PUT", method="post")
+            input(type="text", id="username", name="username" placeholder="Username" required)
+            button.grey-btn(type="submit") change name
+        form.boxed(action="api/users?_method=PUT", method="post")
+            input(type="password", id="password", name="password" placeholder="Password" required)
+            button.grey-btn(type="submit") change password
+        form.boxed(action="api/users?_method=DELETE", method="post")
+            input(type="text", id="username", name="username", placeholder="Confirm with username" required)
+            button.grey-btn(type="submit") delete user

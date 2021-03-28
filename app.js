@@ -74,7 +74,6 @@ const passport_config = require( "./util/passportUtil" );
   app.use( passport.initialize() );
   app.use( passport.session() );
   passport_config.initialize( passport );
-  //app.use(passport_config.returnAuthentication);
 
   // routes
   app.use( "/", require( "./routes" ) );

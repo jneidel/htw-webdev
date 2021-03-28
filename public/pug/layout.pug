@@ -17,8 +17,8 @@ html
           p.logo What to do?
       #header-right.vertical-center
         if isAuthorized
-          a.blue-btn( href="/app" )
-            p Open App
+          a.username(href="/manager")
+            p=username.charAt(0).toUpperCase()
         else
           a.blue-btn( href="/login" )
             p Login

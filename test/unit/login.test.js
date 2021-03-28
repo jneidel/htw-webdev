@@ -72,7 +72,7 @@ describe( " POST /api/login", () => {
         password: validPassword,
       } );
 
-    expect( res.text ).toBe( "Found. Redirecting to /home" );
+    expect( res.text ).toBe( "Found. Redirecting to /app" );
     expect( res.status ).toBe( 302 );
     expect( res.body.error ).toBeFalsy();
   } );

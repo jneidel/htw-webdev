@@ -75,6 +75,7 @@ input[type="text"] {
   outline: none;
   background: transparent
 }
+
 button, input[type="checkbox"] {
   cursor: pointer;
 }
