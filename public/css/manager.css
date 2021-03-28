@@ -1,0 +1,57 @@
+#header {
+    background: #ffcb5c;
+}
+
+input{
+    font-size: 30px;
+    outline: none;
+    border: none;
+    background: transparent;
+}
+
+#main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 30px 0;
+}
+
+#username{
+    font-size: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#unboxed{
+    display: flex;
+    flex-direction: row;
+    padding: 20px 15px;
+    justify-content: space-between;
+}
+
+.boxed{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid #d4d4d4;
+    padding: 20px 15px;
+}
+
+input::placeholder{
+    color: #d4d4d4;
+}
+
+.grey-btn{
+    border: none;
+    height: 30px;
+    width: 120px;
+}
+
+#modified-blue-btn{
+    background-color: #0060f0;
+    color: white;
+    padding: .7rem 2.7rem;
+    border-radius: 2rem;
+    border: none;
+    font-size: 12pt;
+}
