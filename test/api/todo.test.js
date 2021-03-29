@@ -1,6 +1,9 @@
 const express = require( "express" );
 const bodyParser = require( "body-parser" );
 const request = require( "supertest" );
+const passport = require( "passport" );
+const session = require( "express-session" );
+const LocalStrategy = require( "passport-local" ).Strategy;
 
 // apiErrorHandler middleware logs errors
 global.console = {
@@ -8,9 +11,9 @@ global.console = {
 };
 
 const DBresolvedReq = ( data = {} ) => jest.fn( () => Promise.resolve( data ) );
-const DBrejectedReq  = err => jest.fn( () => Promise.reject( err ) );
+const DBrejectedReq = err => jest.fn( () => Promise.reject( err ) );
 
-let app, TodoMock;
+let app, TodoMock, agent;
 
 beforeEach( () => {
   // setup app, different instances for paralell execution w/ seperate mocks
@@ -27,12 +30,42 @@ beforeEach( () => {
   ListMock = {
     findAll: DBresolvedReq(),
   };
+
+  app.use( session( {
+    secret           : "secret",
+    resave           : false,
+    saveUninitialized: false,
+  } ) );
+  app.use( passport.initialize() );
+  app.use( passport.session() );
+  passport.use( new LocalStrategy( {
+    usernameField    : "username",
+    passReqToCallback: true,
+  }, ( req, username, password, done ) => { return done( null, standarUser ); } ) );
+
+  passport.serializeUser( ( user, done ) => { done( null, standarUser.id ); } );
+  passport.deserializeUser( async ( req, id, done ) => {
+    return done( null, standarUser );
+  } );
+
   app.use( ( req, res, next ) => {
     req.models = { Todo: TodoMock, List: ListMock };
+    res.locals.username = standarUser.username;
+    res.locals.userid = standarUser.id;
     next();
   } );
+
   app.use( "/api", require( "../../routes/api" ) );
   app.use( "/api", require( "../../routes/apiErrorHandler" ) );
+
+  agent = request.agent( app );
+
+  const data = { username: "Leon", password: "w" };
+
+  agent
+    .post( "/api/login" )
+    .send( data )
+    .end();
 } );
 
 describe( "POST /api/todo", () => {
@@ -40,10 +73,12 @@ describe( "POST /api/todo", () => {
     const expectedResults = [ { id: "123", text: "todo", done: false } ];
     TodoMock.findAll = DBresolvedReq( expectedResults );
 
-    const res = await request( app )
-      .get( "/api/todos?listId=456" );
-    expect( res.status ).toBe( 200 );
-    expect( res.body.todos ).toEqual( expectedResults );
+    agent
+      .get( "/api/todos?listId=456" )
+      .end( ( err, res ) => {
+        expect( res.status ).toBe( 200 );
+        expect( res.body.todos ).toEqual( expectedResults );
+      } );
   } );
   test( "no listId", async () => {
     const res = await request( app )
@@ -59,14 +94,16 @@ describe( "POST /api/todo", () => {
     const expectedUUID = "123";
     TodoMock.create = DBresolvedReq( { id: expectedUUID } );
 
-    const res = await request( app )
+    agent
       .post( "/api/todo" )
-      .send( { text: "a todo", listId: "456" } );
-    // invalid listId (foreign key error) not testable in unit tests
+      .send( { text: "a todo", listId: "456" } )
+      .end( ( err, res ) => {
+        expect( res.status ).toBe( 200 );
+        expect( res.body.error ).toBeFalsy();
+        expect( res.body.id ).toBe( expectedUUID );
+      } );
 
-    expect( res.status ).toBe( 200 );
-    expect( res.body.error ).toBeFalsy();
-    expect( res.body.id ).toBe( expectedUUID );
+    const res = await request( app );
   } );
 
   test( "empty todo text - send none", async () => {
