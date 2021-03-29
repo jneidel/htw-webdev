@@ -122,7 +122,7 @@ const App = {
         .then( data => this.lists.push( data ) )
         .then( setTimeout( () => {
           const lists = [ ...document.querySelector( "#list-container" ).children ];
-          const newList = lists[lists.length-2].children;
+          const newList = lists[lists.length - 2].children;
           newList[0].disabled = false;
           newList[1].disabled = false;
         }, 100 ) );

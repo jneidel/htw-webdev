@@ -20,7 +20,7 @@ router.get( "/app/todo/:todoId", ( req, res ) => {
   req.models.Todo.findAll( { where: { id: todoId } } )
     .then( todos => {
       if ( todos[0] )
-        res.render( "todo", { title: "Todo", todo: todos[0] } )
+        res.render( "todo", { title: "Todo", todo: todos[0] } );
       else
         res.redirect( "/app" );
     } )
