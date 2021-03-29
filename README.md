@@ -1,12 +1,13 @@
-# htw-webdev-todo
+# What to do?
 
->
+> A Todo App (collaborative uni project at HTW Berlin)
 
+<!--
 [![Travis Build Status](https://img.shields.io/travis/jneidel/htw-webdev-todo.svg?style=flat-square)](https://travis-ci.org/jneidel/htw-webdev-todo)
-[![Heroku Deployment master](https://img.shields.io/badge/deployment-master-brightgreen?style=flat-square)](https://htw-wd-todo.herokuapp.com)
-[![License MIT](https://img.shields.io/badge/license-GPLv3-green.svg?style=flat-square)](LICENSE)
+-->
+[![License GPLv3](https://img.shields.io/badge/license-GPLv3-green.svg?style=flat-square)](LICENSE)
 
-[View App Deployment](https://htw-wd-todo.herokuapp.com)
+[View App](https://todo.jneidel.com)
 
 ## Stack
 
@@ -36,6 +37,7 @@ Start the server:
 
 ```sh
 npm start
+npm run start-prod
 ```
 
 Start the database:
@@ -44,81 +46,10 @@ Start the database:
 sudo systemctl start mysql
 ```
 
-## ER Diagram
+## Run tests
 
-edit on [draw.io](https://app.diagrams.net/#Hjneidel%2Fhtw-webdev-todo%2Fer-diagramm%2Fhtw-wd-todo.drawio)
-
-## API
-
-Response format:
-```json
-{
-  "error": false,
-  "errorMsg": "",
-  ...
-}
-```
-
-### GET `/api/todos`
-
-Get all todos.
-
-Res:
-```json
-{
-  "todos": []
-}
-```
-
-### DELETE `/api/todos`
-
-Remove all completed todos.
-
-Res:
-```json
-{}
-```
-
-### POST `/api/todo`
-
-Insert a todo.
-
-Req:
-```json
-{
-  "text": "todo text"
-}
-```
-
-Res:
-```
-{
-  "id": "uuid"
-}
-```
-
-### PUT `/api/todo`
-
-Update a todo.
-
-Req:
-```json
-{
-  "id": "uuid",
-  "text?": "updated todo text",
-  "done?": true
-}
-```
-
-### DELETE `/api/todo`
-
-Delete a todo.
-
-Req:
-```json
-{
-  "id": "uuid"
-}
+```sh
+npm test
 ```
 
 ## Attribution
