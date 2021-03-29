@@ -109,13 +109,8 @@ router.post("/logout", (req, res) => {
 });
 
 // todo crud
-<<<<<<< HEAD
 router.route( "/todos" )
   .get( checkAuthenticated,  ( req, res, next ) => {
-=======
-router.route("/todos")
-  .get((req, res, next) => {
->>>>>>> origin/master
     const { listId } = req.query;
 
     if (!listId)
@@ -136,7 +131,6 @@ router.route("/todos")
       .catch(err => next(err));
   });
 
-<<<<<<< HEAD
 router.route( "/todo" )
   .post( checkAuthenticated, ( req, res, next ) => {
     const { text, listId } = req.body;
@@ -155,26 +149,6 @@ router.route( "/todo" )
       } );
   } )
   .put( checkAuthenticated, ( req, res, next ) => {
-=======
-router.route("/todo")
-  .post((req, res, next) => {
-    const { text, listId } = req.body;
-    if (!text)
-      return next(new Error("400: empty todo text"));
-    if (!listId)
-      return next(new Error("400: no listId (reference to lists)"));
-
-    req.models.Todo.create({ text, ListId: listId })
-      .then(todo => res.json({ error: false, id: todo.id }))
-      .catch(err => {
-        if (err.message.match("foreign key constraint fails"))
-          return next(new Error("400: listId is invalid (not a foreign key)"));
-
-        return next(err);
-      });
-  })
-  .put((req, res, next) => {
->>>>>>> origin/master
     const { id, text, done } = req.body;
     if (!id)
       return next(new Error("400: missing todo id"));
@@ -189,19 +163,11 @@ router.route("/todo")
     if (done !== undefined)
       updateObj.done = done;
 
-<<<<<<< HEAD
     req.models.Todo.update( updateObj, { where: { id } } )
       .then( () => res.json( { error: false } ) )
       .catch( err => next( err ) );
   } )
   .delete( checkAuthenticated, ( req, res, next ) => {
-=======
-    req.models.Todo.update(updateObj, { where: { id } })
-      .then(() => res.json({ error: false }))
-      .catch(err => next(err));
-  })
-  .delete((req, res, next) => {
->>>>>>> origin/master
     const { id } = req.body;
     if (!id)
       return next(new Error("400: missing todo id"));
@@ -212,7 +178,6 @@ router.route("/todo")
   });
 
 // lists crud
-<<<<<<< HEAD
 router.get( "/lists", checkAuthenticated, async ( req, res, next ) => {
   const userId = res.locals.userid;
   const lists = await req.models.List.findAll( {
@@ -225,18 +190,6 @@ router.get( "/lists", checkAuthenticated, async ( req, res, next ) => {
     req.models.List.create( { UserId: userId, name: "default", color: randomColor() } )
       .then( list => res.json( { error: false, todos: [], lists: [ list ] } ) )
       .catch( err => next( err ) );
-=======
-router.get("/lists", async (req, res, next) => {
-  const lists = await req.models.List.findAll({
-    attributes: ["id", "name", "color", "createdAt"],
-    order: [["createdAt", "ASC"]],
-  }).catch(err => next(err));
-
-  if (lists.length === 0) {
-    req.models.List.create({ name: "default", color: randomColor() }) // TODO: add UserId: user
-      .then(list => res.json({ error: false, todos: [], lists: [list] }))
-      .catch(err => next(err));
->>>>>>> origin/master
   } else { // no list = no todo, so no need to query
     req.models.Todo.findAll({
       where: { ListId: lists[0].id },
@@ -246,7 +199,6 @@ router.get("/lists", async (req, res, next) => {
       .then(todos => res.json({ error: false, todos, lists }))
       .catch(err => next(err));
   }
-<<<<<<< HEAD
 } );
 
 router.route( "/list" )
@@ -257,17 +209,6 @@ router.route( "/list" )
       .catch( err => next( err ) );
   } )
   .put( checkAuthenticated, ( req, res, next ) => {
-=======
-});
-
-router.route("/list")
-  .post((req, res, next) => {
-    req.models.List.create({ name: "new list", color: randomColor() })
-      .then(list => res.json({ error: false, id: list.id, name: list.name, color: list.color }))
-      .catch(err => next(err));
-  })
-  .put((req, res, next) => {
->>>>>>> origin/master
     const { id, name, color } = req.body;
     if (!id)
       return next(new Error("400: missing list id"));
@@ -284,19 +225,11 @@ router.route("/list")
     if (name !== undefined)
       updateObj.name = name;
 
-<<<<<<< HEAD
     req.models.List.update( updateObj, { where: { id } } )
       .then( () => res.json( { error: false } ) )
       .catch( err => next( err ) );
   } )
   .delete( checkAuthenticated, ( req, res, next ) => {
-=======
-    req.models.List.update(updateObj, { where: { id } })
-      .then(() => res.json({ error: false }))
-      .catch(err => next(err));
-  })
-  .delete((req, res, next) => {
->>>>>>> origin/master
     const { id } = req.body;
     if (!id)
       return next(new Error("400: missing list id"));
