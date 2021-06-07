@@ -1,13 +1,13 @@
 # What to do?
 
-> A Todo App (collaborative uni project at HTW Berlin)
+> A Todo App using Node/Vue in a collaborative uni project at HTW Berlin
 
-<!--
-[![Travis Build Status](https://img.shields.io/travis/jneidel/htw-webdev-todo.svg?style=flat-square)](https://travis-ci.org/jneidel/htw-webdev-todo)
--->
+![screenshot](https://user-images.githubusercontent.com/25589715/112756943-ba416f80-8fe7-11eb-90df-8a2f57e41748.png)
+
 [![License GPLv3](https://img.shields.io/badge/license-GPLv3-green.svg?style=flat-square)](LICENSE)
 
-[View App](https://todo.jneidel.com)
+- [View App Deployment](https://todo.jneidel.com)
+- [Project Management](https://github.com/jneidel/what-to-do/projects/1)
 
 ## Stack
 
